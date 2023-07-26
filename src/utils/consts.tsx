@@ -1,5 +1,5 @@
 const MAIN_MENU:string = "/";
-const MESSAGE_TEMPLATE_EDITOR:string = "/editor";
+const MESSAGE_TEMPLATE_EDITOR:string = "/message_template_editor";
 
 export{
     MAIN_MENU,

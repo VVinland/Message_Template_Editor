@@ -4,7 +4,10 @@
     box-sizing:border-box;
     font-family: 'Times New Roman', Times, serif;
     font-size: 14px;
+    font-weight: normal;
 }
+
+
 
 body{
     width: 100vw;

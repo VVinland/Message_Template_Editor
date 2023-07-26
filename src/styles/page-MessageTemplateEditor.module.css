@@ -1,0 +1,109 @@
+/*Обёртка*/
+.MTE_wrapper {
+    /*message template editor*/
+    display: flex;
+    flex-direction: column;
+
+    gap:15px;
+
+    width: 100vw;
+    height: 100vh;
+    padding-top: 2vh;
+
+}
+
+/*Верхняя часть: заголовок, кнопки шаблонов и кнопка [IF|THEN|ELSE]*/
+.MTE_headerAndTopButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    color: white;
+}
+
+.MTE_headerAndTopButtons_header {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.MTE_headerAndTopButtons_arrVarNames {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+
+    gap: 20px;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    margin-left:1vw;
+}
+
+.MTE_headerAndTopButtons_ifThenElse{
+    width:250px;
+    height: 40px;
+    margin-left:23vw;
+
+    border-radius: 8px;
+    cursor:pointer;
+    border:none;
+    background-color: teal;
+    color:black;
+    font-size: 20px;
+    font-weight: bold;
+
+    box-shadow: 0px 1px 5px 2px;
+
+    transition: all 0.3s linear 0s;
+}
+
+.MTE_headerAndTopButtons_ifThenElse:hover{
+    transition: all 0.5s linear 0s;
+    transform: scale(1.2);
+    box-shadow: 0px 1px 10px 3px;
+}
+
+.MTE_headerAndTopButtons_ifThenElse:active{
+    background: black;
+    color:white;
+    transition: all 0.3s linear 0s;
+}
+
+/*Шаблон сообщений*/
+
+.MTE_messageTemplate {
+    background-color: red;
+}
+
+/*Нижняя часть: кнопки Preview_Save_Close*/
+
+.MTE_btns_PreviewSaveClose {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    gap:50px;
+    height: 50px;
+}
+
+.MTE_btns_PreviewSaveClose button{
+    font-size: 24px;
+    border-radius: 8px;
+    padding:2px;
+    cursor:pointer;
+    border:none;
+    min-width: 100px;
+    transition: all 0.5s linear 0s;
+}
+
+.MTE_btns_PreviewSaveClose button:hover{
+    border:5px solid teal;
+    transition: all 0.2s linear 0s;
+}
+
+.MTE_btns_PreviewSaveClose button:active{
+    background: black;
+    color:white;
+    transition: all 0.3s linear 0s;
+}

@@ -1,15 +1,15 @@
-import MainMenu from "./pages/MainMenu.js";
-import MessageTemplateEditor from "./pages/MessageTemplateEditor.js";
-import { MAIN_MENU, MESSAGE_TEMPLATE_EDITOR } from "./utils/consts.js"
+import MainMenu from "./pages/MainMenu.tsx";
+import MessageTemplateEditor from "./pages/MessageTemplateEditor.tsx";
+import { MAIN_MENU, MESSAGE_TEMPLATE_EDITOR } from "./utils/consts.tsx"
 
 const publicRoutes = [
     {
         path: MAIN_MENU,
-        Component: MainMenu
+        Component: MainMenu,
     },
     {
         path: MESSAGE_TEMPLATE_EDITOR,
-        Component: MessageTemplateEditor
+        Component: MessageTemplateEditor,
     }
 ]
 
