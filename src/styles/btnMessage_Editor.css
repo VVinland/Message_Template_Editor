@@ -1,0 +1,19 @@
+.btnMessage_Editor{
+    border-radius: 12px;
+    border: none;
+    width:250px;
+    height: 100px;
+    font-size: 32px;
+    background: black;
+    color:teal;
+    font-weight:bold;
+    box-shadow:1px 1px 15px 2px;
+    cursor:pointer;
+    transition: all 0.5s linear 0s;
+}
+
+.btnMessage_Editor:hover{
+    transition: all 1s linear 0s;
+    transform: scale(1.2);
+    box-shadow:1px 1px 30px 5px;    
+}
