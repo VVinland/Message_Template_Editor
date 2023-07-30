@@ -1,6 +1,18 @@
+import { EditorProps } from "../types.ts";
 import cl from "./../styles/page-MessageTemplateEditor.module.css";
 
-const MessageTemplateEditor = (arrVarNames:Array<string>, template:any, callbackSave:any) => {
+
+
+const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorProps): JSX.Element => {
+
+    console.log(template);
+    
+    if (template) {
+        return (
+            <div>Working!</div> //При налачии шаблона, запускать редактор по шаблону 
+        )
+    }
+
 
     return (
 
@@ -14,10 +26,9 @@ const MessageTemplateEditor = (arrVarNames:Array<string>, template:any, callback
                 </h1>
 
                 <div className={cl.MTE_headerAndTopButtons_arrVarNames}>
-                    <button>template</button>
-                    <button>template</button>
-                    <button>template</button>
-                    <button>template</button>
+                    {arrVarNames.map(item=>{
+                        return <button key={item}>{item}</button>
+                    })}
                 </div>
 
                 <button className={cl.MTE_headerAndTopButtons_ifThenElse}>
@@ -27,7 +38,7 @@ const MessageTemplateEditor = (arrVarNames:Array<string>, template:any, callback
 
 
             <div className={cl.MTE_messageTemplate}>
-                2
+                2 {/**Сюда шаблон сообщения вставить */}
             </div>
 
 
@@ -41,6 +52,9 @@ const MessageTemplateEditor = (arrVarNames:Array<string>, template:any, callback
 
         </div>
     );
+
+
+
 }
 
 export default MessageTemplateEditor;

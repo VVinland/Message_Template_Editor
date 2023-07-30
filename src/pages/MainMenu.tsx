@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import "./../styles/btnMessage_Editor.css";
 import { MESSAGE_TEMPLATE_EDITOR } from "../utils/consts";
+import { useEffect } from "react";
+import "./../styles/btnMessage_Editor.css";
 
-const MainMenu = () => {
+const MainMenu = (): JSX.Element => {
 
     const navigate = useNavigate();
 

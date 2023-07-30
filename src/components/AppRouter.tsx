@@ -1,13 +1,22 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { publicRoutes } from "../routes.tsx";
-import { MAIN_MENU } from "../utils/consts.tsx";
-
-
+import { MAIN_MENU, MESSAGE_TEMPLATE_EDITOR } from "../utils/consts.tsx";
+import { RouteItems } from "../interfaces.ts";
+import { callbackSave, getArrVarNames, geTemplate } from "../utils/helpers/functions.ts";
 
 const AppRouter = () => {
     return (
         <Routes>
-            {publicRoutes.map(item => {
+            {publicRoutes.map((item: RouteItems) => {
+                if (item.path === MESSAGE_TEMPLATE_EDITOR) {
+                    return <Route key={item.path}
+                        path={item.path}
+                        element={<item.Component
+                            callbackSave={callbackSave}
+                            template={geTemplate()}
+                            arrVarNames={getArrVarNames()} />}
+                    />
+                }
                 return <Route key={item.path} path={item.path} element={<item.Component />} />
             })}
             <Route path="*" element={<Navigate to={MAIN_MENU} />} />
