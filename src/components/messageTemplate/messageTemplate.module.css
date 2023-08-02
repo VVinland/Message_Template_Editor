@@ -1,0 +1,11 @@
+.MT_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.MT_textBlockContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

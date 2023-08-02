@@ -1,7 +1,7 @@
 type EditorProps = {
     arrVarNames: Array<string>,
     template: any, // позже изменить на конкретный тип
-    callbackSave: () => void,
+    callbackSave: (templateMessage:any) => void,
 }
 
 

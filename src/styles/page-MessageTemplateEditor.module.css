@@ -1,5 +1,5 @@
-/*Обёртка*/
-.MTE_wrapper {
+/*Обёртка*/ /* MTE- Message Template Editor*/  
+.MTE_wrapper { 
     /*message template editor*/
     display: flex;
     flex-direction: column;
@@ -117,7 +117,10 @@
 /*Шаблон сообщений*/
 
 .MTE_messageTemplate {
-    background-color: red;
+    /* background-color: red; */
+    display: flex;
+    flex-direction: column;
+    gap:20px;
 }
 
 /*Нижняя часть: кнопки Preview_Save_Close*/

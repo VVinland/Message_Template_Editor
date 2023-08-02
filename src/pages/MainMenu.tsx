@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { MESSAGE_TEMPLATE_EDITOR } from "../utils/consts";
-import { useEffect } from "react";
-import "./../styles/btnMessage_Editor.css";
+
+import cl from './../styles/btnMessage_Editor.module.css';
+import "./../styles/commonStyles.css";
 
 const MainMenu = (): JSX.Element => {
 
@@ -14,7 +15,7 @@ const MainMenu = (): JSX.Element => {
     return (
         <div className="App">
             <button
-                className="btnMessage_Editor"
+                className={cl.btnMessage_Editor}
                 onClick={goMessageTemplateEditor}>
                 Message Editor
             </button>

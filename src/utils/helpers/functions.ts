@@ -11,7 +11,7 @@ const getArrVarNames = () => {
 }
 
 const geTemplate = () => {
-    const template = localStorage.getItem('template')
+    let template = localStorage.getItem('template')
         ? localStorage.getItem('template')
         : null;
 

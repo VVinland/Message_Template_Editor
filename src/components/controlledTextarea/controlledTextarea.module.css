@@ -1,0 +1,47 @@
+.ControlledTextarea {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.ControlledTextarea_textarea {
+    width: 252px;
+    min-height: 30px;
+    margin-left: 1vw; /*Отступ слева сюда смотри*/
+    padding: 10px;
+
+    word-break: break-all;
+
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+
+    overflow: hidden;
+    resize: none;
+
+    color: red;
+    background-color: black;
+    border-radius: 8px;
+    line-height: 21px;
+}
+
+.ControlledTextarea_cloneTextarea {
+    position: absolute;
+    width: 250px;
+    min-height: 30px;
+    margin-left: 2vw;
+    padding: 10px;
+
+    word-break: break-all;
+
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+
+    overflow: hidden;
+
+    color: red;
+    background-color: black;
+    border-radius: 8px;
+    opacity: 0;
+    z-index: -100;
+    line-height: 21px;
+}
