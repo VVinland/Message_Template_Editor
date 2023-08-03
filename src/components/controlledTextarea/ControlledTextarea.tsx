@@ -1,11 +1,17 @@
 import { RefObject, useEffect, useRef, useState } from 'react';
 import cl from './controlledTextarea.module.css';
 
+// interface ControlledTextareaProps {
+//     defaultVal?: string;
+//     rest?: any,
+// }
 
 
-const ControlledTextarea = () => {
+const ControlledTextarea = ({ defaultVal, ...rest }: any) => {
 
-    const [text, setText] = useState<string>('');
+
+
+    const [text, setText] = useState<string>( '');
 
     const textareaRef = useRef() as React.MutableRefObject<HTMLTextAreaElement>;
 
@@ -13,18 +19,25 @@ const ControlledTextarea = () => {
 
     const [cursor, setCursor] = useState<null | number>(null);
 
+    // useEffect(() => {
+    //     if (!textareaRef || !cloneTextareaRef) {
+    //         return;
+    //     }
+    //     textareaRef.current.style.height = 5 + cloneTextareaRef.current.clientHeight + "px";
+    // }, [defaultVal,text])
+
     useEffect(() => {
         if (!textareaRef || !cloneTextareaRef) {
             return;
         }
-        const lengthTextarea = textareaRef.current.clientHeight;
-        const lengthDiv = cloneTextareaRef.current.clientHeight
+        // const lengthTextarea = textareaRef.current.clientHeight;
+        // const lengthDiv = cloneTextareaRef.current.clientHeight
 
         cloneTextareaRef.current.innerText = text;
 
-        if (lengthTextarea !== lengthDiv) {
+        // if (lengthTextarea !== lengthDiv) {
             textareaRef.current.style.height = 5 + cloneTextareaRef.current.clientHeight + "px";
-        };
+        // };
     }, [text])
 
     useEffect(() => {
@@ -66,6 +79,7 @@ const ControlledTextarea = () => {
                 onChange={handlerChange}
                 onClick={handlerClick}
                 onKeyUp={handlerOnKeyUp}
+                {...rest}
             />
             <div className={cl.ControlledTextarea_cloneTextarea}
                 ref={cloneTextareaRef}

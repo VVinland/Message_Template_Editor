@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { publicRoutes } from "../routes.tsx";
 import { MAIN_MENU, MESSAGE_TEMPLATE_EDITOR } from "../utils/consts.tsx";
 import { RouteItems } from "../interfaces.ts";
-import { callbackSave, getArrVarNames, geTemplate } from "../utils/helpers/functions.ts";
+import { callbackSave, getArrVarNames, getTemplate } from "../utils/helpers/functions.ts";
 
 const AppRouter = () => {
     return (
@@ -13,7 +13,7 @@ const AppRouter = () => {
                         path={item.path}
                         element={<item.Component
                             callbackSave={callbackSave}
-                            template={geTemplate()}
+                            template={getTemplate()}
                             arrVarNames={getArrVarNames()} />}
                     />
                 }

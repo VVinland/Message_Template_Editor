@@ -1,14 +1,52 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import If_Then_else from "../components/If_Then_Else/If_Then_Else.tsx";
 import ControlledTextarea from "../components/controlledTextarea/ControlledTextarea.tsx";
 import MessageTemplate from "../components/messageTemplate/MessageTemplate.tsx";
 import { EditorProps } from "../types.ts";
+// import { TextField } from './../interfaces.ts';+
 import cl from "./../styles/page-MessageTemplateEditor.module.css";
-
+import { useNavigate } from "react-router-dom";
+import { MAIN_MENU } from "../utils/consts.tsx";
+import Modal from "../components/modal/Modal.tsx";
+import MessageTemplatePreview from "../components/messageTemplatePreview/MessageTemplatePreview.tsx";
+import { getArrVarNames, getTemplate } from "../utils/helpers/functions.ts";
 
 
 const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorProps): JSX.Element => {
 
+    const navigate = useNavigate();
+    const [visible, setVisible] = useState(false);
+    const [queue, setQueue] = useState<Array<Object>>([]);
+
+    useEffect(() => {
+        if (!template) {
+            setQueue([...queue, {
+                key: new Date().getDate(),
+                type: "TextField",
+                value: ''
+            }])
+        } else {
+            setQueue(template);
+        }
+    }, [])
+
+
+    const add_IF_THEN_ELSE = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+
+        setQueue([...queue, {
+            type: "If_Then_Else",
+            value: ''
+        }]);
+
+    }
+
+    const saveMessageTemplate = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        callbackSave(queue);
+    }
+
+    const close = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        navigate(MAIN_MENU);
+    }
 
     return (
 
@@ -25,7 +63,10 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
                     })}
                 </div>
 
-                <button className={cl.MTE_headerAndTopButtons_ifThenElse}>
+                <button className={cl.MTE_headerAndTopButtons_ifThenElse}
+                    onClick={add_IF_THEN_ELSE}
+
+                >
                     Add IF | THEN | ELSE
                 </button>
             </div>
@@ -33,22 +74,38 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
 
             <div className={cl.MTE_messageTemplate}>
                 <MessageTemplate
-                    template={template}
+                    queue={queue}
                 />
             </div>
 
 
             <div className={cl.MTE_btns_PreviewSaveClose}>
-                <button>Preview</button>
+                <button onClick={() => setVisible(true)}>
+                    Preview
+                </button>
+
+                <Modal
+                    visible={visible}
+
+                >
+                    <MessageTemplatePreview
+                        arrVarNames={getArrVarNames()}
+                        template={getTemplate()}
+                        setVisible={setVisible}
+                    />
+                </Modal>
+
                 <button
-                // onClick={saveMessageTemplate}
+                    onClick={saveMessageTemplate}
                 >Save</button>
-                <button>Close</button>
+                <button
+                    onClick={close}
+                >Close</button>
             </div>
 
 
 
-        </div>
+        </div >
     );
 
 

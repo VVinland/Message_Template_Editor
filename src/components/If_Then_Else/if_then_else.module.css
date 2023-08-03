@@ -4,6 +4,7 @@
     flex-direction: row;
     gap: 50px;
     margin-left: 1vw;
+    max-width: 100%;
 }
 
 .MT_btnDelete {
@@ -70,19 +71,32 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    width: 100%;
+    max-width: 100%;
+}
+
+@media all AND (max-width:376px){
+    .MT_wrapper_If_Then_Else{
+        gap:0px;
+    }
 }
 
 .MT_If_Then_Else {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content:space-between;
     align-items: center;
+    width: 100%;
+    max-width: 100%;
+
 }
 
 .MT_If_Then_Else span{
     font-size: 16px;
     font-family: 'Times New Roman', Times, serif;
     font-weight: bold;
+    width: 50px;
+    text-align: right;
 }
 
 .MT_If_Then_Else_colorIf {
