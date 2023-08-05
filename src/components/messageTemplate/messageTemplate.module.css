@@ -2,10 +2,98 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    width: 100%;
+    max-width: 100%;
 }
 
-.MT_textBlockContainer {
+.MT_wrapper:last-child:not(:first-child):not() {
+    margin-left: 5vw;
+}
+
+.MT_container {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    width: 100%;
+    max-width: 100%;
+}
+
+.MT_container_sub {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 100%;
+}
+
+
+/**/
+
+.MT_btnDelete {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    left:3vw;
+
+    min-width: 50px;
+    min-height: 50px;
+
+    max-width: 50px;
+    max-height: 50px;
+
+    border-radius: 8px;
+    cursor: pointer;
+
+    transition: all 0.2 linear 0s;
+    background: linear-gradient(rgb(110, 112, 120), rgb(81, 81, 86)) rgb(110, 112, 120);
+    box-shadow:
+        0px 1px rgba(255, 255, 255, .2),
+        0px 3px 5px rgba(0, 1, 6, .5),
+        0px 0px 1px 1px rgba(0, 1, 6, .2);
+}
+
+.MT_btnDelete:hover {
+    background: linear-gradient(rgb(126, 126, 134), rgb(70, 71, 76)) rgb(126, 126, 134);
+}
+
+.MT_btnDelete:hover:active {
+    top: 1px;
+    background: linear-gradient(rgb(76, 77, 82), rgb(56, 57, 62)) rgb(76, 77, 82);
+    box-shadow:
+        0 0 1px rgba(0, 0, 0, .5) inset,
+        0 2px 3px rgba(0, 0, 0, .5) inset,
+        0 1px 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+.MT_btnDelete_verticalLine,
+.MT_btnDelete_horizontalLine {
+    position: absolute;
+
+    min-width: 4px;
+    min-height: 100%;
+    max-width: 4px;
+    max-height: 100%;
+
+    background: white;
+    border-radius: 8px;
+
+    opacity: 0.9;
+}
+
+.MT_btnDelete_horizontalLine {
+    transform: rotate(45deg);
+}
+
+.MT_btnDelete_verticalLine {
+    transform: rotate(-45deg);
+}
+
+.MT_subLevel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 50px;
+    margin-left: 1vw;
+    max-width: 100%;
 }

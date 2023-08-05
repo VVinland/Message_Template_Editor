@@ -6,25 +6,24 @@ import cl from './messageTemplatePreview.module.css';
 const MessageTemplatePreview = ({ arrVarNames, template, setVisible }: MessageTemplatePreviewProps) => {
 
     const [value, setValue] = useState('!1dasdsadasdsadsadsadasdasdasdasdasddsadasdasdsajdnsadkjdasdsadsajdnsadkjdasdsadsajdnsadkjdasdsadsajdnsadkjdasdsadsajdnsadkjdasdsadsajdnsadkjdasdsadsajdnsadkjdasdsadsajdnsadkjdasdsadsajdnsadkjdasdsadsajdnsadkjdasdsadsajdnsadkjdasdsadsajdnsadkjdasdsadsajdnsadkjdasdsadsajdnsadkjdasdsadsajdnsadkj9')
-    const id = useId();
 
 
     return (
         <div className={cl.MTP}>
 
-            <h1>Message Preview</h1>
+            <h1 >Message Preview</h1>
 
             <div className={cl.MTP_message}>
-                <ControlledTextarea key={id} defaultVal={value}  readOnly />
+                <ControlledTextarea key={new Date().getMilliseconds() + 13} readOnly />
             </div>
 
             <div className={cl.MTP_arrVarNames}>
                 <h1>Variables</h1>
                 {arrVarNames.map((item, index) => {
                     return (
-                        <div className={cl.MTP_varName}>
+                        <div className={cl.MTP_varName} key={index}>
                             <span>{`{${item}}`}</span>
-                            <ControlledTextarea key={index} placeholder={item} />
+                            <ControlledTextarea placeholder={item} />
                         </div>
                     )
                 })}

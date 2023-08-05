@@ -1,3 +1,5 @@
+import { Field } from './types.ts';
+
 interface RouteItems {
     path: string;
     Component: (props: any) => JSX.Element, //подумать о смене типа props`a
@@ -5,18 +7,12 @@ interface RouteItems {
 
 interface ModalProps {
     visible: boolean;
-
     children?: JSX.Element
 }
 
 interface TextField {
-    key: number;
-    thisLink: number;
-
-    name?: string;
-    subTextFields?: any;
-    nextTextField?: any;
-    prevTextField?: any;
+    type: Field,
+    subLevel?: Array<Object>;
 }
 
 interface MessageTemplatePreviewProps {
@@ -25,9 +21,25 @@ interface MessageTemplatePreviewProps {
     setVisible: (value: boolean) => void;
 }
 
+interface ContextId {
+    getId: (id: number) => void,
+    getCursor: (cursor: number | null) => void,
+    getText: (value: string | '') => void
+}
+
+interface IQueue {
+    type: string,
+    id: number,
+    subLevel: Array<IQueue> | null,
+    nextTextFields: Array<IQueue> | null,
+    value:string
+}
+
 export {
     type RouteItems,
     type TextField,
     type ModalProps,
-    type MessageTemplatePreviewProps
+    type MessageTemplatePreviewProps,
+    type ContextId,
+    type IQueue
 }

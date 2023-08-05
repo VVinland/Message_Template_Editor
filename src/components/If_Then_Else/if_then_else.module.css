@@ -75,23 +75,22 @@
     max-width: 100%;
 }
 
-@media all AND (max-width:376px){
-    .MT_wrapper_If_Then_Else{
-        gap:0px;
+@media all AND (max-width:376px) {
+    .MT_wrapper_If_Then_Else {
+        gap: 0px;
     }
 }
 
 .MT_If_Then_Else {
     display: flex;
     flex-direction: row;
-    justify-content:space-between;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
     max-width: 100%;
-
 }
 
-.MT_If_Then_Else span{
+.MT_If_Then_Else label {
     font-size: 16px;
     font-family: 'Times New Roman', Times, serif;
     font-weight: bold;
@@ -99,8 +98,17 @@
     text-align: right;
 }
 
+
+.MT_If_Then_Else_empty label {
+    display: absolute;
+}
+
+.MT_If_Then_Else span:focus {
+    outline: none;
+}
+
 .MT_If_Then_Else_colorIf {
-    color:#066dd4
+    color: #066dd4
 }
 
 .MT_If_Then_Else_colorThen {
@@ -109,4 +117,9 @@
 
 .MT_If_Then_Else_colorElse {
     color: #03cafc;
+}
+
+
+.MT_minusLength {
+    max-width: calc(100%-50px);
 }
