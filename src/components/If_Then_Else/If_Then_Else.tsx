@@ -5,10 +5,10 @@ import cl from './if_then_else.module.css';
 interface If_Then_ElseProps {
     type: string;
     id: number;
-    value: string
+    defvalue: string
 }
 
-const If_Then_else = ({ type, id, value }: If_Then_ElseProps) => {
+const If_Then_else = ({ type, id, defvalue }: If_Then_ElseProps) => {
 
     // const emptyId = useId();
     // const ifId = useId();
@@ -19,7 +19,7 @@ const If_Then_else = ({ type, id, value }: If_Then_ElseProps) => {
         return (
             <div className={[cl.MT_If_Then_Else, cl.MT_If_Then_Else_empty].join(' ')}>
                 <label></label>
-                <ControlledTextarea id={id} defvalue={value}/>
+                <ControlledTextarea id={id} defvalue={defvalue}/>
             </div>
 
         )
@@ -29,7 +29,7 @@ const If_Then_else = ({ type, id, value }: If_Then_ElseProps) => {
         return (
             <div className={[cl.MT_If_Then_Else, cl.MT_If_Then_Else_colorIf].join(' ')}>
                 <label >IF</label>
-                <ControlledTextarea id={id} defvalue={value}/>
+                <ControlledTextarea id={id} defvalue={defvalue}/>
             </div>
         )
     }
@@ -38,7 +38,7 @@ const If_Then_else = ({ type, id, value }: If_Then_ElseProps) => {
         return (
             < div className={[cl.MT_If_Then_Else, cl.MT_If_Then_Else_colorThen].join(' ')} >
                 <label>THEN</label>
-                <ControlledTextarea id={id} defvalue={value}/>
+                <ControlledTextarea id={id} defvalue={defvalue}/>
             </div >
         )
     }
@@ -47,7 +47,7 @@ const If_Then_else = ({ type, id, value }: If_Then_ElseProps) => {
         return (
             <div className={[cl.MT_If_Then_Else, cl.MT_If_Then_Else_colorElse].join(' ')}>
                 <label>ELSE</label>
-                <ControlledTextarea id={id} defvalue={value}/>
+                <ControlledTextarea id={id} defvalue={defvalue}/>
             </div>
         )
     }

@@ -16,16 +16,22 @@ const MessageTemplate = ({ queue, delete_IF_THEN_ELSE }: MessageTemplateProps) =
         <div className={cl.MT_wrapper} >
             {
                 queue.map((item: any, index: number) => {
+
+                    // if(item.value){
+                    //     console.log(item.value);
+                    // }
+
+
                     if (item.subLevel === null && item.nextTextFields === null) {
 
-                        return <If_Then_else type={item.type} key={item.id} id={item.id} value={item.value} />
+                        return <If_Then_else type={item.type} key={item.id} id={item.id} defvalue={item.value} />
 
                     } else {
                         return (
                             <div className={cl.MT_container}>
                                 <div className={cl.MT_container_sub}>
                                     <div>
-                                        <If_Then_else type={item.type} key={item.id} id={item.id}  value={item.value}/>
+                                        <If_Then_else type={item.type} key={item.id} id={item.id}  defvalue={item.value}/>
                                     </div>
                                     <div className={cl.MT_subLevel}>
                                         <button className={cl.MT_btnDelete} onClick={() => delete_IF_THEN_ELSE(item.id)}>

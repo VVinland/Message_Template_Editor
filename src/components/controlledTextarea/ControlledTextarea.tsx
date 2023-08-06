@@ -12,10 +12,9 @@ interface ControlledTextareaProps {
 
 const ControlledTextarea = ({ id, defvalue, ...rest }: any) => {
 
-    console.log(defvalue);
-    
 
     const [text, setText] = useState<string>(''); // Текст что-то кого-то аааааа
+    console.log(text);
 
     const textareaRef = useRef() as React.MutableRefObject<HTMLTextAreaElement>;
 
@@ -25,10 +24,12 @@ const ControlledTextarea = ({ id, defvalue, ...rest }: any) => {
 
     const { getId, getCursor, getText } = useCurrentContext();
 
+
+
     useEffect(() => {
-        if (!textareaRef || !cloneTextareaRef) {
-            return;
-        }
+        // if (!textareaRef || !cloneTextareaRef) {
+        //     return;
+        // }
         // const lengthTextarea = textareaRef.current.clientHeight;
         // const lengthDiv = cloneTextareaRef.current.clientHeight
 
@@ -39,21 +40,24 @@ const ControlledTextarea = ({ id, defvalue, ...rest }: any) => {
         // };
     }, [text])
 
-    // useEffect(() => {
-    //     if (cursor === null) {
-    //         setCursor(0);
-    //     }
-    // }, [cursor])
 
-    useEffect(() => {   
-        console.log(text);
+    useEffect(() => {
+        getText(text);
+        setText('');
+    }, [text])
+
+    useEffect(() => {
+        console.log(cursor);
         
         getId(id);
         getCursor(cursor);
-        getText(text);
+
         textareaRef.current.focus({ preventScroll: false })
         const textarea = textareaRef.current;
         if (textarea) textarea.setSelectionRange(cursor, cursor);
+
+
+
     }, [textareaRef, text, cursor]);
 
 
@@ -63,7 +67,6 @@ const ControlledTextarea = ({ id, defvalue, ...rest }: any) => {
         setText(event.target.value);
         getId(id);
         getCursor(cursor);
-        getText(text);
     }
 
     const handlerClick = (event: React.MouseEvent<HTMLTextAreaElement, MouseEvent>) => {
@@ -72,7 +75,6 @@ const ControlledTextarea = ({ id, defvalue, ...rest }: any) => {
             setCursor(event.target.selectionStart);
             getId(id);
             getCursor(cursor);
-            getText(text);
 
         } else return;
     }
@@ -86,8 +88,6 @@ const ControlledTextarea = ({ id, defvalue, ...rest }: any) => {
             setCursor(event.target.selectionStart);
             getId(id);
             getCursor(cursor);
-            getText(text);
-
         } else {
             return;
         }
@@ -97,13 +97,12 @@ const ControlledTextarea = ({ id, defvalue, ...rest }: any) => {
         <div className={cl.ControlledTextarea}>
             <textarea className={cl.ControlledTextarea_textarea}
                 ref={textareaRef}
-                value={text}
+                value={text || defvalue}
                 onChange={handlerChange}
                 onClick={handlerClick}
                 onKeyUp={handlerOnKeyUp}
                 {...rest}
                 id={id}
-                defaultValue={defvalue}
             />
             <div className={cl.ControlledTextarea_cloneTextarea}
                 ref={cloneTextareaRef}

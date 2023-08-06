@@ -17,8 +17,7 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
     const [visible, setVisible] = useState(false);
     const [queue, setQueue] = useState<Array<IQueue>>([]);
     const [currentId, setCurrentId] = useState<number>(0);
-    const [currentCursor, setCurrentCursor] = useState<number| null>(0);
-    // const [text, setText] = useState('');
+    const [currentCursor, setCurrentCursor] = useState<number | null>(0);
 
     useEffect(() => {
         if (!template) {
@@ -34,9 +33,6 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
         }
     }, [template])
 
-    // useEffect(() => {
-    //     updateValueQueue(queue, text, currentId);
-    // }, [text])
 
 
 
@@ -78,7 +74,7 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
     }
 
     const getCursor = (cursor: number | null): void => {
-        console.log(cursor);
+        // console.log(cursor);
 
         if (cursor === null || cursor === currentCursor) return;
 
@@ -88,8 +84,10 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
     const getText = (value: string) => {
         // console.log(value);
 
-        if (value === undefined) return
-        // setText(value);
+        if (value === '' || value === undefined) return
+
+        updateValueQueue(queue, value, currentId);
+
     }
 
     const goPreview = () => {

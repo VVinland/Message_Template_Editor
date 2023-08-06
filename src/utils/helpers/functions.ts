@@ -310,29 +310,15 @@ function calculateObjectById(queue: Array<IQueue> | null, index: number, cursor:
                 return queue;
             } else if (queue![i].subLevel !== null) {
                 const { leftString, rightString } = splitStringInTwo(queue![i].value, cursor);
-                console.log(queue![i].value);
-                
                 const obj = [{
                     id: new Date().getMilliseconds() + 92,
                     type: '',
                     subLevel: queue![i].subLevel,
                     nextTextFields: queue![i].nextTextFields,
-                    value: '2'
+                    value: rightString
                 }]
-                console.log(queue![i].value === 'string');
-                
-                queue![i].value = 'dasd';
 
-                // queue![i] = {
-                //     id: queue![i].id,
-                //     value: leftString,
-                //     type: queue![i].type,
-                //     subLevel: subLevelArray,
-                //     nextTextFields: obj
-                // }
-
-                // updateValueQueue(queue!, rightString, index)
-
+                queue![i].value = leftString;
                 queue![i].subLevel = subLevelArray
                 queue![i].nextTextFields = obj;
                 return queue;
@@ -361,12 +347,17 @@ function calculateObjectById(queue: Array<IQueue> | null, index: number, cursor:
 function deleteObjectById(queue: Array<IQueue> | null, index: number | null, cursor: number | null) {
     for (let i = 0; i < queue!.length; i++) {
         if (queue![i].id === index) {
-            console.log(queue);
+
             const id = queue![i].id;
             const type = queue![i].type;
+            const str = queue![i].value + queue![i].nextTextFields![0].value;
+
             queue![i] = queue![i].nextTextFields![0];
+
             queue![i].id = id;
             queue![i].type = type;
+            queue![i].value = str;
+            
             return queue;
         } else if (queue![i].subLevel === null) {
             continue;
