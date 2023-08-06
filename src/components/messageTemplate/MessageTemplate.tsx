@@ -17,9 +17,9 @@ const MessageTemplate = ({ queue, delete_IF_THEN_ELSE }: MessageTemplateProps) =
             {
                 queue.map((item: any, index: number) => {
 
-                    if (item.value) {
-                        console.log(item.value, 'MT', item.id);
-                    }
+                    // if (item.value) {
+                    //     console.log(item.value, 'MT', item.id);
+                    // }
 
 
                     if (item.subLevel === null && item.nextTextFields === null) {

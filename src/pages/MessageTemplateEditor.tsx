@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import MessageTemplate from "../components/messageTemplate/MessageTemplate.tsx";
 import { EditorProps } from "../types.ts";
 import cl from "./../styles/page-MessageTemplateEditor.module.css";
@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { MAIN_MENU } from "../utils/consts.tsx";
 import Modal from "../components/modal/Modal.tsx";
 import MessageTemplatePreview from "../components/messageTemplatePreview/MessageTemplatePreview.tsx";
-import { calculateObjectById, deleteObjectById, splitStringInTwo, updateValueQueue } from "../utils/helpers/functions.ts";
+import { calculateObjectById, deleteObjectById, splitStringInTwo, updateValueQueue, insertVarName } from "../utils/helpers/functions.ts";
 import { ContextId, IQueue } from "../interfaces.ts";
 
 export const Context = createContext<null | ContextId>(null);
@@ -18,6 +18,7 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
     const [queue, setQueue] = useState<Array<IQueue>>([]);
     const [currentId, setCurrentId] = useState<number>(0);
     const [currentCursor, setCurrentCursor] = useState<number | null>(0);
+    // const [text, setText] = useState('');
 
     useEffect(() => {
         if (!template) {
@@ -40,12 +41,15 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
 
         // console.log(currentId);
         // console.log(currentCursor);
+        // console.log(currentId);
 
         let newQueue = calculateObjectById(queue, currentId, currentCursor);
         // console.log(newQueue instanceof Array);
 
 
+
         setQueue([...newQueue!]);
+
         setCurrentCursor(0); // затычка на начало строки для курсора
     }
 
@@ -66,7 +70,7 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
     }
 
     const getId = (id: number): void => {
-        console.log(id);
+        // console.log(id);
 
         if (id === undefined || id === currentId) return;
 
@@ -81,20 +85,28 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
         setCurrentCursor(cursor);
     }
 
-    // useEffect(()=>{
+    // useEffect(() => {
     //     updateValueQueue(queue, text, currentId);
-    // },[text])
+    // }, [text])
 
     const getText = (value: string, id: number) => {
-        console.log(value, 'MTE value ');
-        if (value === undefined) return
-
+        // console.log(value, '-MTE value-' , id);
+        if (value === undefined || id === undefined) return
+        // setCurrentId(id);
+        // setText(value);
         updateValueQueue(queue, value, id);
     }
 
     const goPreview = () => {
         setVisible(true)
     }
+
+    const insertVarTemplate = (varName: string) => {
+        const newQueue = insertVarName(queue, currentId, currentCursor, varName)
+
+        setQueue([...newQueue!]);
+    }
+
 
     return (
         <Context.Provider value={
@@ -113,7 +125,10 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
 
                     <div className={cl.MTE_headerAndTopButtons_arrVarNames}>
                         {arrVarNames.map(item => {
-                            return <button key={item}>{`{${item}}`}</button>
+                            return <button
+                                onClick={() => insertVarTemplate(item)}
+                                key={item}
+                            >{`{${item}}`}</button>
                         })}
                     </div>
 

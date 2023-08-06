@@ -289,6 +289,7 @@ function generateNextTextFieldsArray() {
 }
 
 function calculateObjectById(queue: Array<IQueue> | null, index: number, cursor: number | null) {
+    // console.log(index);
 
     const subLevelArray = generateSubLevelArray();
     const nextTextFieldsArray = generateNextTextFieldsArray();
@@ -308,33 +309,37 @@ function calculateObjectById(queue: Array<IQueue> | null, index: number, cursor:
                 return queue;
             } else if (queue![i].subLevel !== null) {
                 const { leftString, rightString } = splitStringInTwo(queue![i].value, cursor);
+                // queue![i].value = '';
+                // console.log(queue![i].value);
+
+                // queue![i].nextTextFields![0].value = rightString;
+                // console.log(queue![i]);
 
                 // updateValueQueue(queue!, leftString, index)
-                // const obj = [{
-                //     id: new Date().getMilliseconds() + 92,
-                //     type: '',
-                //     subLevel: queue![i].subLevel,
-                //     nextTextFields: queue![i].nextTextFields,
-                //     value: rightString
-                // }]
+                const obj = [{
+                    id: new Date().getMilliseconds() + 92,
+                    type: '',
+                    subLevel: queue![i].subLevel,
+                    nextTextFields: queue![i].nextTextFields,
+                    value: rightString
+                }]
 
-                // // queue![i].value = 'fdsfdsf';
                 // console.log(queue![i].id, "cal id");
 
-                // queue![i].subLevel = subLevelArray
-                // queue![i].nextTextFields = obj;
-                // queue![i].value = leftString
+                queue![i].subLevel = subLevelArray
+                queue![i].nextTextFields = obj;
+                queue![i].value = leftString
 
-                const obj = {
-                    id: queue![i].id,
-                    type: queue![i].type,
-                    value: leftString,
-                    subLevel: subLevelArray,
-                    nextTextFields: queue![i].nextTextFields
-                }
-                obj.nextTextFields![0].value = rightString;
+                // const obj = {
+                //     id: queue![i].id,
+                //     type: queue![i].type,
+                //     value: leftString,
+                //     subLevel: subLevelArray,
+                //     nextTextFields: queue![i].nextTextFields
+                // }
+                // obj.nextTextFields![0].value = rightString;
 
-                queue![i] = obj;
+                // queue![i] = obj;
 
 
                 return queue;
@@ -400,14 +405,14 @@ function deleteObjectById(queue: Array<IQueue> | null, index: number | null, cur
 function updateValueQueue(queue: Array<IQueue>, text: string, index: number) {
     for (let i = 0; i < queue.length; i++) {
         if (queue[i].id === index) {
-            console.log(queue[i].value, 'update do');
+            // console.log(queue[i].value, 'update do');
 
-            console.log(text, 'text');
+            // console.log(text, 'text');
 
             queue[i].value = text;
 
 
-            console.log(queue[i].value, 'update posle');
+            // console.log(queue[i].value, 'update posle');
 
             return queue
         } else if (queue[i].subLevel === null) {
@@ -443,6 +448,32 @@ function splitStringInTwo(str: string, index: number | null) {
 
 }
 
+function insertVarName(queue: Array<IQueue> | null, index: number | null, cursor: number | null, varName: string) {
+    if (queue) {
+        for (let i = 0; i < queue.length; i++) {
+            if (queue[i].id === index) {
+                const { leftString, rightString } = splitStringInTwo(queue[i].value, cursor);
+                queue[i].value = leftString + '{' + varName + '}' + rightString;
+                return queue
+            } else if (queue[i].subLevel === null) {
+                continue;
+            } else {
+                let result = insertVarName(queue[i].subLevel, index, cursor, varName);
+                if (result) {
+                    queue[i].subLevel = result;
+                    return queue;
+                }
+
+                result = insertVarName(queue[i].nextTextFields, index, cursor, varName);
+                if (result) {
+                    queue[i].nextTextFields = result;
+                    return queue;
+                }
+            }
+        }
+    } else return;
+}
+
 export {
     callbackSave,
     getArrVarNames,
@@ -450,5 +481,6 @@ export {
     calculateObjectById,
     deleteObjectById,
     updateValueQueue,
-    splitStringInTwo
+    splitStringInTwo,
+    insertVarName
 }
