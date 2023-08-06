@@ -24,7 +24,7 @@ interface MessageTemplatePreviewProps {
 interface ContextId {
     getId: (id: number) => void,
     getCursor: (cursor: number | null) => void,
-    getText: (value: string | '') => void
+    getText: (value: string | '', id:number) => void
 }
 
 interface IQueue {

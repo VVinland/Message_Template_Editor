@@ -17,9 +17,9 @@ const MessageTemplate = ({ queue, delete_IF_THEN_ELSE }: MessageTemplateProps) =
             {
                 queue.map((item: any, index: number) => {
 
-                    // if(item.value){
-                    //     console.log(item.value);
-                    // }
+                    if (item.value) {
+                        console.log(item.value, 'MT', item.id);
+                    }
 
 
                     if (item.subLevel === null && item.nextTextFields === null) {
@@ -28,10 +28,10 @@ const MessageTemplate = ({ queue, delete_IF_THEN_ELSE }: MessageTemplateProps) =
 
                     } else {
                         return (
-                            <div className={cl.MT_container}>
+                            <div className={cl.MT_container} key={item.id}>
                                 <div className={cl.MT_container_sub}>
                                     <div>
-                                        <If_Then_else type={item.type} key={item.id} id={item.id}  defvalue={item.value}/>
+                                        <If_Then_else type={item.type} key={item.id} id={item.id} defvalue={item.value} />
                                     </div>
                                     <div className={cl.MT_subLevel}>
                                         <button className={cl.MT_btnDelete} onClick={() => delete_IF_THEN_ELSE(item.id)}>
@@ -39,18 +39,18 @@ const MessageTemplate = ({ queue, delete_IF_THEN_ELSE }: MessageTemplateProps) =
                                             <div className={cl.MT_btnDelete_horizontalLine}></div>
                                         </button>
 
-                                        {item.subLevel && <MessageTemplate
+                                        <MessageTemplate
                                             delete_IF_THEN_ELSE={delete_IF_THEN_ELSE}
                                             queue={item.subLevel}
-                                        />}
+                                        />
                                     </div>
                                 </div>
-                                {item.nextTextFields && <div>
+                                <div>
                                     <MessageTemplate
                                         queue={item.nextTextFields}
                                         delete_IF_THEN_ELSE={delete_IF_THEN_ELSE}
                                     />
-                                </div>}
+                                </div>
                             </div>
                         )
                     }

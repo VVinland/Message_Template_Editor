@@ -66,7 +66,7 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
     }
 
     const getId = (id: number): void => {
-        // console.log(id);
+        console.log(id);
 
         if (id === undefined || id === currentId) return;
 
@@ -81,13 +81,15 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
         setCurrentCursor(cursor);
     }
 
-    const getText = (value: string) => {
-        // console.log(value);
+    // useEffect(()=>{
+    //     updateValueQueue(queue, text, currentId);
+    // },[text])
 
-        if (value === '' || value === undefined) return
+    const getText = (value: string, id: number) => {
+        console.log(value, 'MTE value ');
+        if (value === undefined) return
 
-        updateValueQueue(queue, value, currentId);
-
+        updateValueQueue(queue, value, id);
     }
 
     const goPreview = () => {

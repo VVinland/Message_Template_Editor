@@ -300,8 +300,6 @@ function calculateObjectById(queue: Array<IQueue> | null, index: number, cursor:
             if (queue![i].subLevel === null) {
 
                 const { leftString, rightString } = splitStringInTwo(queue![i].value, cursor);
-                console.log(leftString);
-                console.log(rightString);
 
                 queue![i].value = leftString;
                 queue![i].subLevel = subLevelArray;
@@ -310,17 +308,35 @@ function calculateObjectById(queue: Array<IQueue> | null, index: number, cursor:
                 return queue;
             } else if (queue![i].subLevel !== null) {
                 const { leftString, rightString } = splitStringInTwo(queue![i].value, cursor);
-                const obj = [{
-                    id: new Date().getMilliseconds() + 92,
-                    type: '',
-                    subLevel: queue![i].subLevel,
-                    nextTextFields: queue![i].nextTextFields,
-                    value: rightString
-                }]
 
-                queue![i].value = leftString;
-                queue![i].subLevel = subLevelArray
-                queue![i].nextTextFields = obj;
+                // updateValueQueue(queue!, leftString, index)
+                // const obj = [{
+                //     id: new Date().getMilliseconds() + 92,
+                //     type: '',
+                //     subLevel: queue![i].subLevel,
+                //     nextTextFields: queue![i].nextTextFields,
+                //     value: rightString
+                // }]
+
+                // // queue![i].value = 'fdsfdsf';
+                // console.log(queue![i].id, "cal id");
+
+                // queue![i].subLevel = subLevelArray
+                // queue![i].nextTextFields = obj;
+                // queue![i].value = leftString
+
+                const obj = {
+                    id: queue![i].id,
+                    type: queue![i].type,
+                    value: leftString,
+                    subLevel: subLevelArray,
+                    nextTextFields: queue![i].nextTextFields
+                }
+                obj.nextTextFields![0].value = rightString;
+
+                queue![i] = obj;
+
+
                 return queue;
             }
         } else if (queue![i].subLevel === null) {
@@ -352,12 +368,13 @@ function deleteObjectById(queue: Array<IQueue> | null, index: number | null, cur
             const type = queue![i].type;
             const str = queue![i].value + queue![i].nextTextFields![0].value;
 
+
             queue![i] = queue![i].nextTextFields![0];
 
             queue![i].id = id;
             queue![i].type = type;
             queue![i].value = str;
-            
+
             return queue;
         } else if (queue![i].subLevel === null) {
             continue;
@@ -383,7 +400,15 @@ function deleteObjectById(queue: Array<IQueue> | null, index: number | null, cur
 function updateValueQueue(queue: Array<IQueue>, text: string, index: number) {
     for (let i = 0; i < queue.length; i++) {
         if (queue[i].id === index) {
+            console.log(queue[i].value, 'update do');
+
+            console.log(text, 'text');
+
             queue[i].value = text;
+
+
+            console.log(queue[i].value, 'update posle');
+
             return queue
         } else if (queue[i].subLevel === null) {
             continue;
