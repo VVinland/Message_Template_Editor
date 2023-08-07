@@ -1,4 +1,4 @@
-import { TextField, IQueue } from './../../interfaces.ts';
+import { TextField, IQueue, Values } from './../../interfaces.ts';
 
 const callbackSave = async (templateMessage: []) => {
     localStorage.setItem('template', JSON.stringify(templateMessage));
@@ -474,6 +474,171 @@ function insertVarName(queue: Array<IQueue> | null, index: number | null, cursor
     } else return;
 }
 
+function generateMessage(template: Array<IQueue> | null, values: Values) {
+
+    if (template) {
+
+        let result = '';
+        let flagIf = false;
+
+        for (let i = 0; i < template.length; i++) {
+            if (template[i].type === '') {
+
+                if (template[i].value === '' && template[i].subLevel !== null) {
+                    let str = generateMessage(template[i].subLevel, values);
+                    if (str) result += str;
+
+                    str = generateMessage(template[i].nextTextFields, values);
+                    if (str) result += str;
+
+                    continue;
+                } else if (template[i].value === '' && template[i].subLevel === null) {
+                    continue;
+                } else if (template[i].value !== '' && template[i].subLevel === null) {
+                    let str = replaceVariables(template[i].value, values);
+                    result += str;
+                    continue;
+                } else if (template[i].value !== '' && template[i].subLevel !== null) {
+                    let str = replaceVariables(template[i].value, values);
+                    result += str;
+
+                    str = generateMessage(template[i].subLevel, values);
+                    if (str) result += str;
+
+                    str = generateMessage(template[i].nextTextFields, values);
+                    if (str) result += str;
+
+                    continue;
+                }
+
+            } else if (template[i].type === 'If') {
+                if (!template[i].value) {
+                    flagIf = false;
+                } else {
+                    const str = replaceVariables(template[i].value, values)
+                    if (str) {
+                        flagIf = true;
+                        continue;
+                    } else {
+                        flagIf = false;
+                        continue;
+                    }
+                }
+            } else if (template[i].type === 'Then') {
+                if (flagIf) {
+                    if (template[i].value === '' && template[i].subLevel !== null) {
+                        let str = generateMessage(template[i].subLevel, values);
+                        if (str) result += str;
+
+                        str = generateMessage(template[i].nextTextFields, values);
+                        if (str) result += str;
+
+                        continue;
+                    } else if (template[i].value === '' && template[i].subLevel === null) {
+                        continue;
+                    } else if (template[i].value !== '' && template[i].subLevel === null) {
+                        let str = replaceVariables(template[i].value, values);
+                        result += str;
+                        continue;
+                    } else if (template[i].value !== '' && template[i].subLevel !== null) {
+                        let str = replaceVariables(template[i].value, values);
+                        result += str;
+
+                        str = generateMessage(template[i].subLevel, values);
+                        if (str) result += str;
+
+                        str = generateMessage(template[i].nextTextFields, values);
+                        if (str) result += str;
+
+                        continue;
+                    }
+                } else continue;
+            } else if (template[i].type === 'Else') {
+                if (!flagIf) {
+                    if (template[i].value === '' && template[i].subLevel !== null) {
+                        let str = generateMessage(template[i].subLevel, values);
+                        if (str) result += str;
+
+                        str = generateMessage(template[i].nextTextFields, values);
+                        if (str) result += str;
+
+                        continue;
+                    } else if (template[i].value === '' && template[i].subLevel === null) {
+                        continue;
+                    } else if (template[i].value !== '' && template[i].subLevel === null) {
+                        let str = replaceVariables(template[i].value, values);
+                        result += str;
+                        continue;
+                    } else if (template[i].value !== '' && template[i].subLevel !== null) {
+                        let str = replaceVariables(template[i].value, values);
+                        result += str;
+
+                        str = generateMessage(template[i].subLevel, values);
+                        if (str) result += str;
+
+                        str = generateMessage(template[i].nextTextFields, values);
+                        if (str) result += str;
+
+                        continue;
+                    }
+                } else continue;
+            } else return '';
+        }
+        return result;
+    } else {
+        return '';
+    }
+}
+
+function replaceVariables(text: string, values: Values) {
+
+    let result = '';
+    let stack = [];
+    let wordToCheck = ''
+
+    for (let i = 0; i < text.length; i++) {
+        if (stack.length === 0 && text[i] === '{') {
+            stack.push(text[i]);
+        } else if (stack.length > 0 && text[i] !== '}') {
+            wordToCheck += text[i];
+        } else if (stack.length > 0 && text[i] === '}') {
+
+            if (wordToCheck !== '') {
+                for (const varName in values) {
+
+                    if (wordToCheck === varName) {
+                        wordToCheck = values[varName]; // попробовать break и return
+                        stack.length = 0;
+                    }
+                }
+
+                if (stack.length === 0) {
+                    result += wordToCheck;
+                    wordToCheck='';
+                } else {
+                    result += stack[0] + wordToCheck + text[i]
+                    stack.length = 0;
+                    wordToCheck='';
+                }
+            } else {
+                result += stack[0] + wordToCheck + text[i]
+                stack.length = 0;
+                wordToCheck='';
+            }
+
+
+        } else result += text[i];
+    }
+
+    if (stack.length === 1) {
+        result += stack[0] + wordToCheck;
+    }
+
+    return result;
+}
+
+
+
 export {
     callbackSave,
     getArrVarNames,
@@ -482,5 +647,6 @@ export {
     deleteObjectById,
     updateValueQueue,
     splitStringInTwo,
-    insertVarName
+    insertVarName,
+    generateMessage
 }

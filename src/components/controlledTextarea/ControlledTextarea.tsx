@@ -24,11 +24,7 @@ const ControlledTextarea = ({ id, defvalue, ...rest }: any) => {
     const { getId, getCursor, getText } = useCurrentContext();
 
 
-
     useEffect(() => {
-
-
-
         if (text === '' && defvalue !== undefined) {
             cloneTextareaRef.current.innerText = defvalue;
             textareaRef.current.style.height = 25 + cloneTextareaRef.current.clientHeight + "px";
@@ -38,47 +34,22 @@ const ControlledTextarea = ({ id, defvalue, ...rest }: any) => {
         } else {
             return;
         }
-
-        // cloneTextareaRef.current.innerText = text;
-
-        // console.log(cloneTextareaRef.current.innerText);
-
-        // if (cloneTextareaRef.current.innerText === '') return;
-        // else {
-        //     textareaRef.current.style.height = 25 + cloneTextareaRef.current.clientHeight + "px";
-        //     // cloneTextareaRef.current.innerHTML = '';
-        // }
-
-        // if (!textareaRef || !cloneTextareaRef) {
-        //     return;
-        // }
-        // const lengthTextarea = textareaRef.current.clientHeight;
-        // const lengthDiv = cloneTextareaRef.current.clientHeight
-
-        // cloneTextareaRef.current.innerText = text;
-
-        // if (lengthTextarea !== lengthDiv) {
-        // textareaRef.current.style.height = 25 + cloneTextareaRef.current.clientHeight + "px";
-        // };
     }, [text])
 
     useEffect(() => {
-        getText(text, id);
-
-    }, [text])
+        setText(defvalue);
+    }, [defvalue])
 
     useEffect(() => {
 
         getId(id);
         getCursor(cursor);
-        setText(defvalue)
+        getText(text, id);
 
         textareaRef.current.focus({ preventScroll: false })
         const textarea = textareaRef.current;
         if (textarea) textarea.setSelectionRange(cursor, cursor);
-
-
-    }, [textareaRef, cursor, defvalue]);
+    }, [textareaRef, cursor, text]);
 
     const handlerChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
 
@@ -87,6 +58,7 @@ const ControlledTextarea = ({ id, defvalue, ...rest }: any) => {
 
         getId(id);
         getCursor(cursor);
+
     }
 
     const handlerClick = (event: React.MouseEvent<HTMLTextAreaElement, MouseEvent>) => {

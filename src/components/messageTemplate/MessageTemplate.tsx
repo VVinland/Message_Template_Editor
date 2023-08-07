@@ -1,4 +1,4 @@
-import { useContext, useEffect, useId, useRef, useState } from 'react';
+import React, { useContext, useEffect, useId, useRef, useState } from 'react';
 import cl from './messageTemplate.module.css';
 import ControlledTextarea from '../controlledTextarea/ControlledTextarea';
 import If_Then_else from '../If_Then_Else/If_Then_Else';
@@ -9,7 +9,7 @@ interface MessageTemplateProps {
     delete_IF_THEN_ELSE: (id: number) => void;
 }
 
-const MessageTemplate = ({ queue, delete_IF_THEN_ELSE }: MessageTemplateProps) => {
+const MessageTemplate = React.memo(({ queue, delete_IF_THEN_ELSE }: MessageTemplateProps) => {
 
 
     return (
@@ -61,7 +61,7 @@ const MessageTemplate = ({ queue, delete_IF_THEN_ELSE }: MessageTemplateProps) =
 
 
 
-}
+})
 
 export default MessageTemplate;
 

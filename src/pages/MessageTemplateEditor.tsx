@@ -18,7 +18,6 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
     const [queue, setQueue] = useState<Array<IQueue>>([]);
     const [currentId, setCurrentId] = useState<number>(0);
     const [currentCursor, setCurrentCursor] = useState<number | null>(0);
-    // const [text, setText] = useState('');
 
     useEffect(() => {
         if (!template) {
@@ -84,7 +83,7 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
 
         setCurrentCursor(cursor);
     }
-
+   
     // useEffect(() => {
     //     updateValueQueue(queue, text, currentId);
     // }, [text])
@@ -162,6 +161,7 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
                             arrVarNames={arrVarNames}
                             template={queue}
                             setVisible={setVisible}
+                            visible={visible}
                         />
                     </Modal>
 

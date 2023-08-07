@@ -24,7 +24,7 @@ interface MessageTemplatePreviewProps {
 interface ContextId {
     getId: (id: number) => void,
     getCursor: (cursor: number | null) => void,
-    getText: (value: string | '', id:number) => void
+    getText: (value: string | '', id: number) => void
 }
 
 interface IQueue {
@@ -32,7 +32,11 @@ interface IQueue {
     id: number,
     subLevel: Array<IQueue> | null,
     nextTextFields: Array<IQueue> | null,
-    value:string
+    value: string
+}
+
+interface Values {
+    [key: string]: string;
 }
 
 export {
@@ -41,5 +45,6 @@ export {
     type ModalProps,
     type MessageTemplatePreviewProps,
     type ContextId,
-    type IQueue
+    type IQueue,
+    type Values
 }

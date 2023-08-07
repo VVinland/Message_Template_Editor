@@ -15,42 +15,6 @@
     text-align: center;
 }
 
-.MTP_message {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width:100%;
-    max-width: 100%;
-    max-height: 100%;
-}
-
-.MTP_arrVarNames {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: space-between;
-
-    gap: 20px;
-    max-height: 100%;
-}
-
-.MTP_varName {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.MTP_varName span {
-    font-size: 24px;
-    font-family: 'Times New Roman', Times, serif;
-    font-weight: bold;
-}
-
 .MTP button {
     width: 100px;
     height: 40px;
