@@ -1,6 +1,6 @@
 import { StructureTemplate, Values } from './../../interfaces.ts';
 
-const callbackSave = async (templateMessage: []) => {
+const callbackSave = async (templateMessage: Array<StructureTemplate>) => {
     localStorage.setItem('template', JSON.stringify(templateMessage));
     return;
 }
@@ -355,6 +355,7 @@ function deleteObjectById(queue: Array<StructureTemplate> | null, index: number 
 }
 
 function updateValueStructureTemplate(queue: Array<StructureTemplate>, text: string, index: number) {
+
     for (let i = 0; i < queue.length; i++) {
         if (queue[i].id === index) {
 

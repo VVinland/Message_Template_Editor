@@ -17,11 +17,21 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
     const [visible, setVisible] = useState(false); // open/close Modal
 
     // Template-related manipulations occur in the structure template
-    const [structureTemplate, setStructureTemplate] = useState<Array<StructureTemplate>>(template);
+    const [structureTemplate, setStructureTemplate] = useState<Array<StructureTemplate>>(template || fillStructureTemplate);
 
     //current values
     const [currentId, setCurrentId] = useState<number>(0);
     const [currentCursor, setCurrentCursor] = useState<number | null>(0);
+
+    function fillStructureTemplate() {
+        return [{
+            id: new Date().getMilliseconds() + 1001,
+            type: '',
+            subLevel: null,
+            nextTextFields: null,
+            value: ''
+        }]
+    }
 
     const add_IF_THEN_ELSE = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 
