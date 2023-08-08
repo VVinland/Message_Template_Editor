@@ -1,0 +1,30 @@
+/*CI - controlledInput*/
+.CI{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap:10px;
+    width:100%
+}
+
+.CI_label{
+    font-size: 32px;
+    font-weight: bold;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.CI_input{
+    border:none;
+    background: black;
+    color:red;
+    padding:5px;
+    border-radius:8px;
+    font-weight: bold;
+    font-size: 32px;
+}
+
+.CI_input::placeholder{
+    color:white;
+    opacity: 0.8;
+}

@@ -1,28 +1,31 @@
-import { createContext, useCallback, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import MessageTemplate from "../components/messageTemplate/MessageTemplate.tsx";
 import { EditorProps } from "../types.ts";
-import cl from "./../styles/page-MessageTemplateEditor.module.css";
 import { useNavigate } from "react-router-dom";
 import { MAIN_MENU } from "../utils/consts.tsx";
 import Modal from "../components/modal/Modal.tsx";
 import MessageTemplatePreview from "../components/messageTemplatePreview/MessageTemplatePreview.tsx";
-import { calculateObjectById, deleteObjectById, splitStringInTwo, updateValueQueue, insertVarName } from "../utils/helpers/functions.ts";
-import { ContextId, IQueue } from "../interfaces.ts";
+import { insertObjectById, deleteObjectById, updateValueStructureTemplate, insertVarName } from "../utils/helpers/functions.ts";
+import { ContextId, StructureTemplate } from "../interfaces.ts";
+import cl from "./../styles/page-MessageTemplateEditor.module.css";
 
 export const Context = createContext<null | ContextId>(null);
 
 const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorProps): JSX.Element => {
 
     const navigate = useNavigate();
-    const [visible, setVisible] = useState(false);
-    const [queue, setQueue] = useState<Array<IQueue>>([]);
+    const [visible, setVisible] = useState(false); // open/close Modal
+
+    // Template-related manipulations occur in the structure template
+    const [structureTemplate, setStructureTemplate] = useState<Array<StructureTemplate>>([]);
+
+    //current values
     const [currentId, setCurrentId] = useState<number>(0);
     const [currentCursor, setCurrentCursor] = useState<number | null>(0);
-    // const [text, setText] = useState('');
 
     useEffect(() => {
         if (!template) {
-            setQueue([{
+            setStructureTemplate([{
                 id: new Date().getMilliseconds() + 1001,
                 type: '',
                 subLevel: null,
@@ -30,7 +33,7 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
                 value: ''
             }])
         } else {
-            setQueue([...template]);
+            setStructureTemplate([...template]);
         }
     }, [template])
 
@@ -39,38 +42,31 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
 
     const add_IF_THEN_ELSE = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 
-        // console.log(currentId);
-        // console.log(currentCursor);
-        // console.log(currentId);
+        let newStructureTemplate = insertObjectById(structureTemplate, currentId, currentCursor);
 
-        let newQueue = calculateObjectById(queue, currentId, currentCursor);
-        // console.log(newQueue instanceof Array);
+        setStructureTemplate([...newStructureTemplate!]);
 
-
-
-        setQueue([...newQueue!]);
-
-        setCurrentCursor(0); // затычка на начало строки для курсора
+        // resetting the current value is needed when, when adding if then else,
+        // the cursor moved to the beginning of the line
+        setCurrentCursor(0);
     }
 
     const delete_IF_THEN_ELSE = (id: number) => {
-        let newQueue = deleteObjectById(queue, id, currentCursor);
-        // console.log(id);
-        // console.log(id);
-        if (newQueue) setQueue([...newQueue])
+        let newStructureTemplate = deleteObjectById(structureTemplate, id, currentCursor);
+
+        if (newStructureTemplate) setStructureTemplate([...newStructureTemplate])
     }
 
 
     const saveMessageTemplate = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        callbackSave(queue);
+        callbackSave(structureTemplate);
     }
 
     const close = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         navigate(MAIN_MENU);
     }
 
-    const getId = (id: number): void => {
-        // console.log(id);
+    const getId = (id: number | undefined): void => {
 
         if (id === undefined || id === currentId) return;
 
@@ -78,23 +74,18 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
     }
 
     const getCursor = (cursor: number | null): void => {
-        // console.log(cursor);
+        console.log(cursor);
 
         if (cursor === null || cursor === currentCursor) return;
 
         setCurrentCursor(cursor);
     }
 
-    // useEffect(() => {
-    //     updateValueQueue(queue, text, currentId);
-    // }, [text])
+    const getText = (value: string, id: number | undefined) => {
 
-    const getText = (value: string, id: number) => {
-        // console.log(value, '-MTE value-' , id);
         if (value === undefined || id === undefined) return
-        // setCurrentId(id);
-        // setText(value);
-        updateValueQueue(queue, value, id);
+
+        updateValueStructureTemplate(structureTemplate, value, id);
     }
 
     const goPreview = () => {
@@ -102,18 +93,16 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
     }
 
     const insertVarTemplate = (varName: string) => {
-        const newQueue = insertVarName(queue, currentId, currentCursor, varName)
-
-        setQueue([...newQueue!]);
+        const newStructureTemplate = insertVarName(structureTemplate, currentId, currentCursor, varName)
+        setStructureTemplate([...newStructureTemplate!]);
     }
-
 
     return (
         <Context.Provider value={
             {
                 getId,
                 getCursor,
-                getText
+                getText,
             }
         }>
             <div className={cl.MTE_wrapper}>
@@ -143,7 +132,7 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
 
                 <div className={cl.MTE_messageTemplate}>
                     <MessageTemplate
-                        queue={queue}
+                        structureTemplate={structureTemplate}
                         delete_IF_THEN_ELSE={delete_IF_THEN_ELSE}
                     />
                 </div>
@@ -160,8 +149,9 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
                     >
                         <MessageTemplatePreview
                             arrVarNames={arrVarNames}
-                            template={queue}
+                            template={structureTemplate}
                             setVisible={setVisible}
+                            visible={visible}
                         />
                     </Modal>
 

@@ -7,17 +7,14 @@
 }
 
 .ControlledTextarea_textarea {
-    /* width: 252px; */
     min-height: 30px;
     margin-left: 1vw;
-    /*Отступ слева сюда смотри*/
     margin-right: 2vw;
     padding: 10px 10px 0px 10px;
-    /* padding: 10px; */
     
     word-break: break-all;
 
-    font-size: 20px;
+    font-size: 24px;
     font-family: 'Times New Roman', Times, serif;
 
     overflow: hidden;
@@ -26,24 +23,20 @@
     color: red;
     background-color: black;
     border-radius: 8px;
-    line-height: 21px;
+    line-height: 1.5;
     max-width: 100%;
-    overflow-y: auto;
 }
 
 .ControlledTextarea_cloneTextarea {
     position: absolute;
-    /* width: 250px; */
     min-height: 30px;
     margin-left: 1vw;
     margin-right: 2vw;
     padding: 10px 10px 0px 10px;
-    /* padding: 10px; */
-
 
     word-break: break-all;
 
-    font-size: 20px;
+    font-size: 24px;
     font-family: 'Times New Roman', Times, serif;
 
     overflow: hidden;
@@ -53,7 +46,6 @@
     border-radius: 8px;
     opacity: 0;
     z-index: -100;
-    line-height: 21px;
+    line-height: 1.5;
     max-width: 100%;
-
 }

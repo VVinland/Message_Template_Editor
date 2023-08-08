@@ -1,26 +1,15 @@
-import { useContext, useEffect, useId, useRef, useState } from 'react';
-import cl from './messageTemplate.module.css';
-import ControlledTextarea from '../controlledTextarea/ControlledTextarea';
 import If_Then_else from '../If_Then_Else/If_Then_Else';
-import { Context } from '../../pages/MessageTemplateEditor';
+import { MessageTemplateProps } from '../../interfaces';
+import cl from './messageTemplate.module.css';
 
-interface MessageTemplateProps {
-    queue: Array<object>,
-    delete_IF_THEN_ELSE: (id: number) => void;
-}
 
-const MessageTemplate = ({ queue, delete_IF_THEN_ELSE }: MessageTemplateProps) => {
+const MessageTemplate = ({ structureTemplate, delete_IF_THEN_ELSE }: MessageTemplateProps) => {
 
 
     return (
         <div className={cl.MT_wrapper} >
             {
-                queue.map((item: any, index: number) => {
-
-                    // if (item.value) {
-                    //     console.log(item.value, 'MT', item.id);
-                    // }
-
+                structureTemplate.map((item: any,) => {
 
                     if (item.subLevel === null && item.nextTextFields === null) {
 
@@ -41,13 +30,13 @@ const MessageTemplate = ({ queue, delete_IF_THEN_ELSE }: MessageTemplateProps) =
 
                                         <MessageTemplate
                                             delete_IF_THEN_ELSE={delete_IF_THEN_ELSE}
-                                            queue={item.subLevel}
+                                            structureTemplate={item.subLevel}
                                         />
                                     </div>
                                 </div>
                                 <div>
                                     <MessageTemplate
-                                        queue={item.nextTextFields}
+                                        structureTemplate={item.nextTextFields}
                                         delete_IF_THEN_ELSE={delete_IF_THEN_ELSE}
                                     />
                                 </div>
@@ -58,33 +47,6 @@ const MessageTemplate = ({ queue, delete_IF_THEN_ELSE }: MessageTemplateProps) =
             }
         </div >
     );
-
-
-
 }
 
 export default MessageTemplate;
-
-// {
-//     queue.map((item: any, index: number) => {
-//         if (item.subLevel.length === 0) {
-
-//             return <If_Then_else type={item.type} />
-
-//         } else {
-//             return (
-//                 <div className={cl.MT_container}>
-//                     <div className={cl.MT_container_sub}>
-//                         <div>
-//                             <If_Then_else type={item.type} />
-//                         </div>
-//                         <MessageTemplate queue={item.subLevel} />
-//                     </div>
-//                     <div>
-//                         <MessageTemplate queue={item.nextTextField} />
-//                     </div>
-//                 </div>
-//             )
-//         }
-//     })
-// }

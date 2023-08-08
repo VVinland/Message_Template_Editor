@@ -1,7 +1,9 @@
+import { StructureTemplate } from "./interfaces";
+
 type EditorProps = {
     arrVarNames: Array<string>,
-    template: any, // позже изменить на конкретный тип
-    callbackSave: (templateMessage: any) => void,
+    template: Array<StructureTemplate>, 
+    callbackSave: (template: Array<StructureTemplate>) => void,
 }
 
 type Field = {
