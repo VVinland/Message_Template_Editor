@@ -210,11 +210,9 @@ const getTemplate = () => {
     //     },
     // ];
 
-
-
     let template = localStorage.template
         ? JSON.parse(localStorage.template)
-        : null;
+        : null; 
 
     return template;
 }

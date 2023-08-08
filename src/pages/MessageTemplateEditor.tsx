@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import MessageTemplate from "../components/messageTemplate/MessageTemplate.tsx";
 import uuid from 'react-uuid';
 import { EditorProps } from "../types.ts";
@@ -13,12 +13,12 @@ import cl from "./../styles/page-MessageTemplateEditor.module.css";
 export const Context = createContext<null | ContextId>(null);
 
 const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorProps): JSX.Element => {
-
+    
     const navigate = useNavigate();
     const [visible, setVisible] = useState(false); // open/close Modal
 
     // Template-related manipulations occur in the structure template
-    const [structureTemplate, setStructureTemplate] = useState<Array<StructureTemplate>>(template || fillStructureTemplate);
+    const [structureTemplate, setStructureTemplate] = useState<Array<StructureTemplate>>(JSON.parse(localStorage.template) || fillStructureTemplate);
 
     //current values
     const [currentId, setCurrentId] = useState<string>('');
@@ -48,7 +48,7 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
     const delete_IF_THEN_ELSE = (id: string) => {
         let newStructureTemplate = deleteObjectById(structureTemplate, id, currentCursor);
 
-        if (newStructureTemplate) setStructureTemplate([...newStructureTemplate])
+        setStructureTemplate([...newStructureTemplate!])
     }
 
 
@@ -58,6 +58,7 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
 
     const close = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         navigate(MAIN_MENU);
+        callbackSave(structureTemplate);
     }
 
     const getId = (id: string | undefined): void => {
@@ -158,9 +159,6 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
             </div >
         </Context.Provider>
     );
-
-
-
-}
+};
 
 export default MessageTemplateEditor; 

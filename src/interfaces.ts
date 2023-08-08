@@ -1,4 +1,3 @@
-import { PropsWithChildren } from 'react';
 import { Field } from './types.ts';
 
 interface RouteItems {
@@ -41,7 +40,7 @@ interface Values {
 }
 
 interface ControlledTextareaProps {
-    id?: string 
+    id?: string
     defvalue: string;
     rest?: any,
 }
@@ -64,7 +63,7 @@ interface FormVarNamesProps {
 
 interface ControlledInputProps {
     varName: string,
-    onChange: (name:string, value:string)=>void;
+    onChange: (name: string, value: string) => void;
 }
 
 export {

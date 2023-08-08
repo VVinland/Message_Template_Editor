@@ -3,8 +3,10 @@ import { publicRoutes } from "../routes.tsx";
 import { MAIN_MENU, MESSAGE_TEMPLATE_EDITOR } from "../utils/consts.tsx";
 import { RouteItems } from "../interfaces.ts";
 import { callbackSave, getArrVarNames, getTemplate } from "../utils/helpers/functions.ts";
+import { useEffect } from "react";
 
 const AppRouter = () => {
+    
     return (
         <Routes>
             {publicRoutes.map((item: RouteItems) => {
