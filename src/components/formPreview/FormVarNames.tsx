@@ -1,13 +1,10 @@
+import { FormVarNamesProps } from "../../interfaces";
 import ControlledInput from "../controlledInput/ControlledInput";
 import cl from './formVarNames.module.css';
 
-interface FormVarNamesProps {
-    values: Object,
-    onChange: any;
-    setVisible: any
-}
 
-const FormPreview = ({ values, onChange, setVisible }: FormVarNamesProps) => {
+
+const FormPreview = ({ values, onChange }: FormVarNamesProps) => {
 
     const valuesArray = Object.keys(values);
 

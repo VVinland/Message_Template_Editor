@@ -1,10 +1,8 @@
 import { useId, useState } from "react";
+import { ControlledInputProps } from "../../interfaces";
 import cl from './controlledInput.module.css'
 
-interface ControlledInputProps {
-    varName: string,
-    onChange: any;
-}
+
 
 const ControlledInput = ({ varName, onChange }: ControlledInputProps) => {
     const id = useId();

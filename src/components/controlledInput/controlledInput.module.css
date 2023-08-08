@@ -9,7 +9,7 @@
 }
 
 .CI_label{
-    font-size: 24;
+    font-size: 32px;
     font-weight: bold;
     font-family: 'Times New Roman', Times, serif;
 }
@@ -21,6 +21,7 @@
     padding:5px;
     border-radius:8px;
     font-weight: bold;
+    font-size: 32px;
 }
 
 .CI_input::placeholder{

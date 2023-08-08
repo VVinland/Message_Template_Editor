@@ -1,11 +1,9 @@
-import React, { useCallback, useEffect, useId, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ControlledTextarea from '../controlledTextarea/ControlledTextarea.tsx';
-import { MessageTemplatePreviewProps, Values } from './../../interfaces.ts';
-import cl from './messageTemplatePreview.module.css';
+import {Values } from './../../interfaces.ts';
 import FormPreview from '../formPreview/FormVarNames.tsx';
 import { generateMessage } from '../../utils/helpers/functions.ts';
-
-
+import cl from './messageTemplatePreview.module.css';
 
 const MessageTemplatePreview = ({ arrVarNames, template, setVisible, visible }: any) => {
 
@@ -35,12 +33,11 @@ const MessageTemplatePreview = ({ arrVarNames, template, setVisible, visible }: 
             <h1 >Message Preview</h1>
 
 
-            <ControlledTextarea value={message} disabled defvalue={message}/>
+            <ControlledTextarea disabled defvalue={message}/>
 
             <FormPreview
                 values={values}
                 onChange={handlerOnChange}
-                setVisible={setVisible}
             />
 
             <button

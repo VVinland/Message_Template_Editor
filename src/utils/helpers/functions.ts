@@ -1,83 +1,99 @@
-import { TextField, IQueue, Values } from './../../interfaces.ts';
+import { StructureTemplate, Values } from './../../interfaces.ts';
 
 const callbackSave = async (templateMessage: []) => {
     localStorage.setItem('template', JSON.stringify(templateMessage));
     return;
-} // поддделать ассинхронность, но с начало определиться с шаблоном сообщения
+}
 
 const getArrVarNames = () => {
     const arrVarNames = localStorage.arrVarNames
         ? JSON.parse(localStorage.arrVarNames)
         : ['firstname', 'lastname', 'company', 'position'];
+
     return arrVarNames;
 }
 
 const getTemplate = () => {
+
+    // obj - this is how my structure looks like
+    // if there is no subLevel then no nextTextFields
     // const obj = [
     //     {
     //         id: new Date().getMilliseconds() + 1,
     //         type: '',
+    //         value: '',
     //         subLevel:
     //             [
     //                 {
     //                     id: new Date().getMilliseconds() + 15,
     //                     type: 'If',
+    //                     value:'',
     //                     subLevel: null,
     //                     nextTextFields: null
     //                 },
     //                 {
     //                     id: new Date().getMilliseconds() + 27,
     //                     type: 'Then',
+    //                     value:'',
     //                     subLevel: null,
     //                     nextTextFields: null
     //                 },
     //                 {
     //                     id: new Date().getMilliseconds() + 38,
     //                     type: 'Else',
+    //                     value:'',
     //                     subLevel: null,
     //                     nextTextFields: null
     //                 },
     //             ],
     //         nextTextFields: [{
     //             type: '',
+    //             value:'',
     //             id: new Date().getMilliseconds() + 101,
     //             subLevel:
     //                 [
     //                     {
     //                         id: new Date().getMilliseconds() + 203,
     //                         type: 'If',
+    //                         value:'',
     //                         subLevel: null,
     //                         nextTextFields: null
     //                     },
     //                     {
     //                         id: new Date().getMilliseconds() + 307,
     //                         type: 'Then',
+    //                         value:'',
     //                         subLevel: [
     //                             {
     //                                 id: new Date().getMilliseconds() + 432,
     //                                 type: 'If',
+    //                                 value:'',
     //                                 subLevel: null,
     //                                 nextTextFields: null
     //                             },
     //                             {
     //                                 id: new Date().getMilliseconds() + 505,
     //                                 type: 'Then',
+    //                                 value:'',
     //                                 subLevel: [
     //                                     {
     //                                         id: new Date().getMilliseconds() + 601,
     //                                         type: 'If',
+    //                                         value:'',
     //                                         subLevel: null,
     //                                         nextTextFields: null
     //                                     },
     //                                     {
     //                                         id: new Date().getMilliseconds() + 733,
     //                                         type: 'Then',
+    //                                         value:'',
     //                                         subLevel: null,
     //                                         nextTextFields: null
     //                                     },
     //                                     {
     //                                         id: new Date().getMilliseconds() + 899,
     //                                         type: 'Else',
+    //                                         value:'',
     //                                         subLevel: null,
     //                                         nextTextFields: null
     //                                     },
@@ -86,21 +102,25 @@ const getTemplate = () => {
     //                                     {
     //                                         id: new Date().getMilliseconds() + 323,
     //                                         type: '',
+    //                                         value:'',
     //                                         subLevel: [{
     //                                             id: new Date().getMilliseconds() + 1001,
     //                                             type: 'If',
+    //                                             value:'',
     //                                             subLevel: null,
     //                                             nextTextFields: null
     //                                         },
     //                                         {
     //                                             id: new Date().getMilliseconds() + 1111,
     //                                             type: 'Then',
+    //                                             value:'',
     //                                             subLevel: null,
     //                                             nextTextFields: null
     //                                         },
     //                                         {
     //                                             id: new Date().getMilliseconds() + 2222,
     //                                             type: 'Else',
+    //                                             value:'',
     //                                             subLevel: null,
     //                                             nextTextFields: null
     //                                         },
@@ -108,22 +128,26 @@ const getTemplate = () => {
     //                                         nextTextFields: [{
     //                                             id: new Date().getMilliseconds() + 999,
     //                                             type: '',
+    //                                             value:'',
     //                                             subLevel: [
     //                                                 {
     //                                                     id: new Date().getMilliseconds() + 1001,
     //                                                     type: 'If',
+    //                                                     value:'',
     //                                                     subLevel: null,
     //                                                     nextTextFields: null
     //                                                 },
     //                                                 {
     //                                                     id: new Date().getMilliseconds() + 1111,
     //                                                     type: 'Then',
+    //                                                     value:'',
     //                                                     subLevel: null,
     //                                                     nextTextFields: null
     //                                                 },
     //                                                 {
     //                                                     id: new Date().getMilliseconds() + 2222,
     //                                                     type: 'Else',
+    //                                                     value:'',
     //                                                     subLevel: null,
     //                                                     nextTextFields: null
     //                                                 },
@@ -132,6 +156,7 @@ const getTemplate = () => {
     //                                                 {
     //                                                     id: new Date().getMilliseconds() + 1503,
     //                                                     type: '',
+    //                                                     value:'',
     //                                                     subLevel: null,
     //                                                     nextTextFields: null
     //                                                 },
@@ -144,6 +169,7 @@ const getTemplate = () => {
     //                             {
     //                                 id: new Date().getMilliseconds() + 1703,
     //                                 type: 'Else',
+    //                                 value:'',
     //                                 subLevel: null,
     //                                 nextTextFields: null
     //                             },
@@ -153,6 +179,7 @@ const getTemplate = () => {
     //                             {
     //                                 id: new Date().getMilliseconds() + 1893,
     //                                 type: '',
+    //                                 value:'',
     //                                 subLevel: null,
     //                                 nextTextFields: null
     //                             }
@@ -161,6 +188,7 @@ const getTemplate = () => {
     //                     {
     //                         id: new Date().getMilliseconds() + 1932,
     //                         type: 'Else',
+    //                         value:'',
     //                         subLevel: null,
     //                         nextTextFields: null
     //                     }
@@ -171,6 +199,7 @@ const getTemplate = () => {
     //                     {
     //                         id: new Date().getMilliseconds() + 2118,
     //                         type: '',
+    //                         value:'',
     //                         subLevel: null,
     //                         nextTextFields: null
     //                     }
@@ -179,76 +208,17 @@ const getTemplate = () => {
     //     },
     // ];
 
-    // const obj = [
-    //     {
-    //         type: '',
-    //         subLevel: [
-    //             {
-    //                 type: 'If',
-    //                 subLevel: null,
-    //                 nextTextFields: null
-    //             },
-    //             {
-    //                 type: 'Then',
-    //                 subLevel: null,
-    //                 nextTextFields: null
-    //             },
-    //             {
-    //                 type: 'Else',
-    //                 subLevel: null,
-    //                 nextTextFields: null
-    //             },
-    //         ],
-    //         nextTextFields: [
-    //             {
-    //                 type: '',
-    //                 subLevel: null,
-    //                 nextTextFields: null
-    //             }
-    //         ]
-    //     },
-    //     {
-    //         type: '',
-    //         subLevel: [
-    //             {
-    //                 type: 'If',
-    //                 subLevel: null,
-    //                 nextTextFields: null
-    //             },
-    //             {
-    //                 type: 'Then',
-    //                 subLevel: null,
-    //                 nextTextFields: null
-    //             },
-    //             {
-    //                 type: 'Else',
-    //                 subLevel: null,
-    //                 nextTextFields: null
-    //             },
-    //         ],
-    //         nextTextFields: [
-    //             {
-    //                 type: '',
-    //                 subLevel: null,
-    //                 nextTextFields: null
-    //             }
-    //         ]
-    //     }
-    // ]
 
-    let temporary = localStorage.getItem('template')
-        ? localStorage.getItem('template')
+
+    let template = localStorage.template
+        ? JSON.parse(localStorage.template)
         : null;
 
-    let template;
-    if (temporary) {
-        template = JSON.parse(temporary);
-    }
     return template;
 }
 
 function generateSubLevelArray() {
-    const subLevelArray = [ // в subLevel
+    const subLevelArray = [ //  subLevel
         {
 
             id: new Date().getMilliseconds() + 101,
@@ -276,7 +246,7 @@ function generateSubLevelArray() {
 }
 
 function generateNextTextFieldsArray() {
-    const nextTextFieldsArray = [ // в nextTextFields
+    const nextTextFieldsArray = [ //  nextTextFields
         {
             id: new Date().getMilliseconds() + 909,
             type: '',
@@ -288,8 +258,7 @@ function generateNextTextFieldsArray() {
     return nextTextFieldsArray
 }
 
-function calculateObjectById(queue: Array<IQueue> | null, index: number, cursor: number | null) {
-    // console.log(index);
+function insertObjectById(queue: Array<StructureTemplate> | null, index: number, cursor: number | null) {
 
     const subLevelArray = generateSubLevelArray();
     const nextTextFieldsArray = generateNextTextFieldsArray();
@@ -299,7 +268,8 @@ function calculateObjectById(queue: Array<IQueue> | null, index: number, cursor:
         if (queue![i].id === index) {
 
             if (queue![i].subLevel === null) {
-
+                // structure template is in utils/helpers/function.ts in function getTemplate
+                //First addition to a textarea with type ''
                 const { leftString, rightString } = splitStringInTwo(queue![i].value, cursor);
 
                 queue![i].value = leftString;
@@ -308,14 +278,10 @@ function calculateObjectById(queue: Array<IQueue> | null, index: number, cursor:
                 queue![i].nextTextFields![0].value = rightString;
                 return queue;
             } else if (queue![i].subLevel !== null) {
+                //Subsequent addition to a textarea with type ''
+                //If re-added, then all content will go into nextTextFields and new content will be added to subLevel
                 const { leftString, rightString } = splitStringInTwo(queue![i].value, cursor);
-                // queue![i].value = '';
-                // console.log(queue![i].value);
 
-                // queue![i].nextTextFields![0].value = rightString;
-                // console.log(queue![i]);
-
-                // updateValueQueue(queue!, leftString, index)
                 const obj = [{
                     id: new Date().getMilliseconds() + 92,
                     type: '',
@@ -324,36 +290,22 @@ function calculateObjectById(queue: Array<IQueue> | null, index: number, cursor:
                     value: rightString
                 }]
 
-                // console.log(queue![i].id, "cal id");
-
                 queue![i].subLevel = subLevelArray
                 queue![i].nextTextFields = obj;
                 queue![i].value = leftString
-
-                // const obj = {
-                //     id: queue![i].id,
-                //     type: queue![i].type,
-                //     value: leftString,
-                //     subLevel: subLevelArray,
-                //     nextTextFields: queue![i].nextTextFields
-                // }
-                // obj.nextTextFields![0].value = rightString;
-
-                // queue![i] = obj;
-
 
                 return queue;
             }
         } else if (queue![i].subLevel === null) {
             continue;
         } else {
-            let result: Array<IQueue> | null | undefined = calculateObjectById(queue![i].subLevel, index, cursor);
+            let result: Array<StructureTemplate> | null | undefined = insertObjectById(queue![i].subLevel, index, cursor);
 
             if (result) {
                 queue![i].subLevel = result;
                 return queue;
             }
-            result = calculateObjectById(queue![i].nextTextFields, index, cursor);
+            result = insertObjectById(queue![i].nextTextFields, index, cursor);
 
             if (result) {
                 queue![i].nextTextFields = result;
@@ -365,10 +317,10 @@ function calculateObjectById(queue: Array<IQueue> | null, index: number, cursor:
     return;
 }
 
-function deleteObjectById(queue: Array<IQueue> | null, index: number | null, cursor: number | null) {
+function deleteObjectById(queue: Array<StructureTemplate> | null, index: number | null, cursor: number | null) {
     for (let i = 0; i < queue!.length; i++) {
         if (queue![i].id === index) {
-
+            // the reverse action of adding(insertObjectById)
             const id = queue![i].id;
             const type = queue![i].type;
             const str = queue![i].value + queue![i].nextTextFields![0].value;
@@ -402,26 +354,20 @@ function deleteObjectById(queue: Array<IQueue> | null, index: number | null, cur
     return;
 }
 
-function updateValueQueue(queue: Array<IQueue>, text: string, index: number) {
+function updateValueStructureTemplate(queue: Array<StructureTemplate>, text: string, index: number) {
     for (let i = 0; i < queue.length; i++) {
         if (queue[i].id === index) {
-            // console.log(queue[i].value, 'update do');
-
-            // console.log(text, 'text');
 
             queue[i].value = text;
-
-
-            // console.log(queue[i].value, 'update posle');
 
             return queue
         } else if (queue[i].subLevel === null) {
             continue;
         } else {
-            let result = updateValueQueue(queue[i].subLevel!, text, index);
+            let result = updateValueStructureTemplate(queue[i].subLevel!, text, index);
             if (result) return queue;
 
-            result = updateValueQueue(queue[i].nextTextFields!, text, index);
+            result = updateValueStructureTemplate(queue[i].nextTextFields!, text, index);
             if (result) return queue;
         }
     }
@@ -448,7 +394,7 @@ function splitStringInTwo(str: string, index: number | null) {
 
 }
 
-function insertVarName(queue: Array<IQueue> | null, index: number | null, cursor: number | null, varName: string) {
+function insertVarName(queue: Array<StructureTemplate> | null, index: number | null, cursor: number | null, varName: string) {
     if (queue) {
         for (let i = 0; i < queue.length; i++) {
             if (queue[i].id === index) {
@@ -474,7 +420,7 @@ function insertVarName(queue: Array<IQueue> | null, index: number | null, cursor
     } else return;
 }
 
-function generateMessage(template: Array<IQueue> | null, values: Values) {
+function generateMessage(template: Array<StructureTemplate> | null, values: Values) {
 
     if (template) {
 
@@ -482,7 +428,11 @@ function generateMessage(template: Array<IQueue> | null, values: Values) {
         let flagIf = false;
 
         for (let i = 0; i < template.length; i++) {
-            if (template[i].type === '') {
+            if (template[i].type === '' || template[i].type === 'Then' || template[i].type === 'Else') {
+
+                if (template[i].type === 'Then' && flagIf === false) continue;
+
+                if (template[i].type === 'Else' && flagIf === true) continue;
 
                 if (template[i].value === '' && template[i].subLevel !== null) {
                     let str = generateMessage(template[i].subLevel, values);
@@ -507,7 +457,6 @@ function generateMessage(template: Array<IQueue> | null, values: Values) {
 
                     str = generateMessage(template[i].nextTextFields, values);
                     if (str) result += str;
-
                     continue;
                 }
 
@@ -524,64 +473,6 @@ function generateMessage(template: Array<IQueue> | null, values: Values) {
                         continue;
                     }
                 }
-            } else if (template[i].type === 'Then') {
-                if (flagIf) {
-                    if (template[i].value === '' && template[i].subLevel !== null) {
-                        let str = generateMessage(template[i].subLevel, values);
-                        if (str) result += str;
-
-                        str = generateMessage(template[i].nextTextFields, values);
-                        if (str) result += str;
-
-                        continue;
-                    } else if (template[i].value === '' && template[i].subLevel === null) {
-                        continue;
-                    } else if (template[i].value !== '' && template[i].subLevel === null) {
-                        let str = replaceVariables(template[i].value, values);
-                        result += str;
-                        continue;
-                    } else if (template[i].value !== '' && template[i].subLevel !== null) {
-                        let str = replaceVariables(template[i].value, values);
-                        result += str;
-
-                        str = generateMessage(template[i].subLevel, values);
-                        if (str) result += str;
-
-                        str = generateMessage(template[i].nextTextFields, values);
-                        if (str) result += str;
-
-                        continue;
-                    }
-                } else continue;
-            } else if (template[i].type === 'Else') {
-                if (!flagIf) {
-                    if (template[i].value === '' && template[i].subLevel !== null) {
-                        let str = generateMessage(template[i].subLevel, values);
-                        if (str) result += str;
-
-                        str = generateMessage(template[i].nextTextFields, values);
-                        if (str) result += str;
-
-                        continue;
-                    } else if (template[i].value === '' && template[i].subLevel === null) {
-                        continue;
-                    } else if (template[i].value !== '' && template[i].subLevel === null) {
-                        let str = replaceVariables(template[i].value, values);
-                        result += str;
-                        continue;
-                    } else if (template[i].value !== '' && template[i].subLevel !== null) {
-                        let str = replaceVariables(template[i].value, values);
-                        result += str;
-
-                        str = generateMessage(template[i].subLevel, values);
-                        if (str) result += str;
-
-                        str = generateMessage(template[i].nextTextFields, values);
-                        if (str) result += str;
-
-                        continue;
-                    }
-                } else continue;
             } else return '';
         }
         return result;
@@ -591,7 +482,7 @@ function generateMessage(template: Array<IQueue> | null, values: Values) {
 }
 
 function replaceVariables(text: string, values: Values) {
-
+    //All possible cases listed
     let result = '';
     let stack = [];
     let wordToCheck = ''
@@ -607,23 +498,24 @@ function replaceVariables(text: string, values: Values) {
                 for (const varName in values) {
 
                     if (wordToCheck === varName) {
-                        wordToCheck = values[varName]; // попробовать break и return
+                        wordToCheck = values[varName];
                         stack.length = 0;
+                        break;
                     }
                 }
 
                 if (stack.length === 0) {
                     result += wordToCheck;
-                    wordToCheck='';
+                    wordToCheck = '';
                 } else {
                     result += stack[0] + wordToCheck + text[i]
                     stack.length = 0;
-                    wordToCheck='';
+                    wordToCheck = '';
                 }
             } else {
                 result += stack[0] + wordToCheck + text[i]
                 stack.length = 0;
-                wordToCheck='';
+                wordToCheck = '';
             }
 
 
@@ -643,9 +535,9 @@ export {
     callbackSave,
     getArrVarNames,
     getTemplate,
-    calculateObjectById,
+    insertObjectById,
     deleteObjectById,
-    updateValueQueue,
+    updateValueStructureTemplate,
     splitStringInTwo,
     insertVarName,
     generateMessage
