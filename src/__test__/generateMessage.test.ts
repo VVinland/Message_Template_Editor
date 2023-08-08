@@ -1,4 +1,5 @@
 import { generateMessage } from './../utils/helpers/functions.ts';
+import uuid from 'react-uuid';
 
 describe('check function generateMessage', () => {
     test('should return empty string if template is empty', () => {
@@ -9,7 +10,7 @@ describe('check function generateMessage', () => {
         const values = {};
         const template = [
             {
-                id: new Date().getMilliseconds() + 11,
+                id: uuid(),
                 type: '',
                 value: 'Hello, Daniil! ',
                 subLevel: [],
@@ -28,7 +29,7 @@ describe('check function generateMessage', () => {
         };
         const template = [
             {
-                id: new Date().getMilliseconds() + 11,
+                id: uuid(),
                 type: '',
                 value: '{firstname} {lastname} {company} {position}',
                 subLevel: [],
@@ -59,26 +60,26 @@ describe('check function generateMessage', () => {
         };
         const template = [
             {
-                id: new Date().getMilliseconds() ,
+                id: uuid(),
                 type: '',
                 value: 'Good aftermoon',
                 subLevel: [
                     {
-                        id: new Date().getMilliseconds() ,
+                        id: uuid(),
                         type: 'If',
                         value: '{boolean}',
                         subLevel: [],
                         nextTextFields: []
                     },
                     {
-                        id: new Date().getMilliseconds() ,
+                        id: uuid(),
                         type: 'Then',
                         value: ' {firstname} {lastname} {company} {position}.',
                         subLevel: [],
                         nextTextFields: []
                     },
                     {
-                        id: new Date().getMilliseconds(),
+                        id: uuid(),
                         type: 'Else',
                         value: ', branch worked else!',
                         subLevel: [],
@@ -87,7 +88,7 @@ describe('check function generateMessage', () => {
                 ],
                 nextTextFields: [
                     {
-                        id: new Date().getMilliseconds() ,
+                        id: uuid(),
                         type: '',
                         value: ' Best wishes!',
                         subLevel: [],
@@ -111,7 +112,7 @@ describe('check function generateMessage', () => {
         };
         const template = [
             {
-                id: new Date().getMilliseconds() + 11,
+                id: uuid(),
                 type: '',
                 value: '{first{lastname}name} {middlename} {work} {job}',
                 subLevel: [],

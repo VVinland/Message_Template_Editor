@@ -340,7 +340,7 @@ function deleteObjectById(queue: Array<StructureTemplate> | null, index: string 
         } else {
 
             let result: Array<StructureTemplate> | null | undefined = deleteObjectById(queue![i].subLevel, index, cursor);
-            console.log(result);
+
             if (result) {
                 queue![i].subLevel = result;
                 return queue;
