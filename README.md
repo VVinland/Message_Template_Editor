@@ -23,11 +23,13 @@ The message template editor looks like this.
 By clicking on the "Add IF | THEN | ELSE" button, a construction will be added, which will be installed at the last place of the input cursor.
 ![image](https://github.com/VVinland/Message_Template_Editor/assets/114589631/256babde-6cb5-4ea9-9526-419c5b7480a4)
 
-Если в строке есть текст, то текст будет разбит по курсору ввода.
+Если в строке есть текст, то текст будет разбит по курсору ввода. Если нажать на кнопку удалить, то конструкция удалится и текст соединится.
 
-If there is text in the line, then the text will be broken at the input cursor.
+If there is text in the line, then the text will be broken at the input cursor. If click on the delete button, the structure will be deleted and the text will be connected.
 ![image](https://github.com/VVinland/Message_Template_Editor/assets/114589631/d85de8c0-0b89-4e1f-ac5b-cc51dcd459ae)
 ![image](https://github.com/VVinland/Message_Template_Editor/assets/114589631/41daeea9-bc3f-4c16-aedf-24f4a20a6208)
+![image](https://github.com/VVinland/Message_Template_Editor/assets/114589631/8da63ae2-5748-4d4b-a8d8-d0b05438e48f)
+
 
 В верхнем левом углу есть кнопки - это переменные, по нажатию на которые они будут вставляться по последнему месту курсора ввода. 
 Вместо таких переменных можно будет подставлять слова и даже целые предложения!
