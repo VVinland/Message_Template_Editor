@@ -1,5 +1,6 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import MessageTemplate from "../components/messageTemplate/MessageTemplate.tsx";
+import uuid from 'react-uuid';
 import { EditorProps } from "../types.ts";
 import { useNavigate } from "react-router-dom";
 import { MAIN_MENU } from "../utils/consts.tsx";
@@ -20,12 +21,12 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
     const [structureTemplate, setStructureTemplate] = useState<Array<StructureTemplate>>(template || fillStructureTemplate);
 
     //current values
-    const [currentId, setCurrentId] = useState<number>(0);
+    const [currentId, setCurrentId] = useState<string>('');
     const [currentCursor, setCurrentCursor] = useState<number | null>(0);
 
     function fillStructureTemplate() {
         return [{
-            id: new Date().getMilliseconds() + 1001,
+            id: uuid(),
             type: '',
             subLevel: null,
             nextTextFields: null,
@@ -44,7 +45,7 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
         setCurrentCursor(0);
     }
 
-    const delete_IF_THEN_ELSE = (id: number) => {
+    const delete_IF_THEN_ELSE = (id: string) => {
         let newStructureTemplate = deleteObjectById(structureTemplate, id, currentCursor);
 
         if (newStructureTemplate) setStructureTemplate([...newStructureTemplate])
@@ -59,7 +60,7 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
         navigate(MAIN_MENU);
     }
 
-    const getId = (id: number | undefined): void => {
+    const getId = (id: string | undefined): void => {
 
         if (id === undefined || id === currentId) return;
 
@@ -67,14 +68,13 @@ const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorPr
     }
 
     const getCursor = (cursor: number | null): void => {
-        console.log(cursor);
 
         if (cursor === null || cursor === currentCursor) return;
 
         setCurrentCursor(cursor);
     }
 
-    const getText = (value: string, id: number | undefined) => {
+    const getText = (value: string, id: string | undefined) => {
 
         if (value === undefined || id === undefined) return
 

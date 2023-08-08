@@ -1,4 +1,6 @@
+import uuid from 'react-uuid';
 import { StructureTemplate, Values } from './../../interfaces.ts';
+
 
 const callbackSave = async (templateMessage: Array<StructureTemplate>) => {
     localStorage.setItem('template', JSON.stringify(templateMessage));
@@ -221,21 +223,21 @@ function generateSubLevelArray() {
     const subLevelArray = [ //  subLevel
         {
 
-            id: new Date().getMilliseconds() + 101,
+            id: uuid(),
             type: 'If',
             subLevel: null,
             nextTextFields: null,
             value: ''
         },
         {
-            id: new Date().getMilliseconds() + 303,
+            id: uuid(),
             type: 'Then',
             subLevel: null,
             nextTextFields: null,
             value: ''
         },
         {
-            id: new Date().getMilliseconds() + 505,
+            id: uuid(),
             type: 'Else',
             subLevel: null,
             nextTextFields: null,
@@ -248,7 +250,7 @@ function generateSubLevelArray() {
 function generateNextTextFieldsArray() {
     const nextTextFieldsArray = [ //  nextTextFields
         {
-            id: new Date().getMilliseconds() + 909,
+            id: uuid(),
             type: '',
             subLevel: null,
             nextTextFields: null,
@@ -258,7 +260,7 @@ function generateNextTextFieldsArray() {
     return nextTextFieldsArray
 }
 
-function insertObjectById(queue: Array<StructureTemplate> | null, index: number, cursor: number | null) {
+function insertObjectById(queue: Array<StructureTemplate> | null, index: string, cursor: number | null) {
 
     const subLevelArray = generateSubLevelArray();
     const nextTextFieldsArray = generateNextTextFieldsArray();
@@ -283,7 +285,7 @@ function insertObjectById(queue: Array<StructureTemplate> | null, index: number,
                 const { leftString, rightString } = splitStringInTwo(queue![i].value, cursor);
 
                 const obj = [{
-                    id: new Date().getMilliseconds() + 92,
+                    id: uuid(),
                     type: '',
                     subLevel: queue![i].subLevel,
                     nextTextFields: queue![i].nextTextFields,
@@ -317,7 +319,7 @@ function insertObjectById(queue: Array<StructureTemplate> | null, index: number,
     return;
 }
 
-function deleteObjectById(queue: Array<StructureTemplate> | null, index: number | null, cursor: number | null) {
+function deleteObjectById(queue: Array<StructureTemplate> | null, index: string | null, cursor: number | null) {
     for (let i = 0; i < queue!.length; i++) {
         if (queue![i].id === index) {
             // the reverse action of adding(insertObjectById)
@@ -337,7 +339,7 @@ function deleteObjectById(queue: Array<StructureTemplate> | null, index: number 
             continue;
         } else {
 
-            let result: any = deleteObjectById(queue![i].subLevel, index, cursor);
+            let result: Array<StructureTemplate> | null | undefined = deleteObjectById(queue![i].subLevel, index, cursor);
             console.log(result);
             if (result) {
                 queue![i].subLevel = result;
@@ -354,7 +356,7 @@ function deleteObjectById(queue: Array<StructureTemplate> | null, index: number 
     return;
 }
 
-function updateValueStructureTemplate(queue: Array<StructureTemplate>, text: string, index: number) {
+function updateValueStructureTemplate(queue: Array<StructureTemplate>, text: string, index: string) {
 
     for (let i = 0; i < queue.length; i++) {
         if (queue[i].id === index) {
@@ -395,7 +397,7 @@ function splitStringInTwo(str: string, index: number | null) {
 
 }
 
-function insertVarName(queue: Array<StructureTemplate> | null, index: number | null, cursor: number | null, varName: string) {
+function insertVarName(queue: Array<StructureTemplate> | null, index: string | null, cursor: number | null, varName: string) {
     if (queue) {
         for (let i = 0; i < queue.length; i++) {
             if (queue[i].id === index) {

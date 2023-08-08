@@ -38,7 +38,7 @@ const ControlledTextarea = ({ id, defvalue, ...rest }: any) => {
     }, [defvalue])
 
     useEffect(() => {
-
+        
         // send up-to-date data
         getCursor(cursor);
         getId(id!);
@@ -91,6 +91,7 @@ const ControlledTextarea = ({ id, defvalue, ...rest }: any) => {
                 onClick={handlerClick}
                 onKeyUp={handlerOnKeyUp}
                 {...rest}
+                id={id}
             />
             <div className={cl.ControlledTextarea_cloneTextarea}
                 defaultValue={text || defvalue}

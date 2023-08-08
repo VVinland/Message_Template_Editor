@@ -23,14 +23,14 @@ interface MessageTemplatePreviewProps {
 }
 
 interface ContextId {
-    getId: (id: number) => void,
+    getId: (id: string) => void,
     getCursor: (cursor: number | null) => void,
-    getText: (value: string | '', id: number) => void,
+    getText: (value: string | '', id: string) => void,
 }
 
 interface StructureTemplate {
     type: string,
-    id: number,
+    id: string,
     subLevel: Array<StructureTemplate> | null,
     nextTextFields: Array<StructureTemplate> | null,
     value: string
@@ -41,20 +41,20 @@ interface Values {
 }
 
 interface ControlledTextareaProps {
-    id?: number 
+    id?: string 
     defvalue: string;
-    rest: any,
+    rest?: any,
 }
 
 interface If_Then_ElseProps {
     type: string;
-    id: number;
+    id: string;
     defvalue: string,
 }
 
 interface MessageTemplateProps {
     structureTemplate: Array<object>,
-    delete_IF_THEN_ELSE: (id: number) => void;
+    delete_IF_THEN_ELSE: (id: string) => void;
 }
 
 interface FormVarNamesProps {
