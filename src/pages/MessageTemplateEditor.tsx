@@ -13,18 +13,27 @@ import cl from "./../styles/page-MessageTemplateEditor.module.css";
 export const Context = createContext<null | ContextId>(null);
 
 const MessageTemplateEditor = ({ arrVarNames, template, callbackSave }: EditorProps): JSX.Element => {
+    console.log(template);
     
     const navigate = useNavigate();
     const [visible, setVisible] = useState(false); // open/close Modal
 
     // Template-related manipulations occur in the structure template
-    const [structureTemplate, setStructureTemplate] = useState<Array<StructureTemplate>>(JSON.parse(localStorage.template) || fillStructureTemplate);
+    const [structureTemplate, setStructureTemplate] = useState<Array<StructureTemplate>>(fillStructureTemplate);
+    console.log(structureTemplate);
 
     //current values
     const [currentId, setCurrentId] = useState<string>('');
     const [currentCursor, setCurrentCursor] = useState<number | null>(0);
 
     function fillStructureTemplate() {
+
+        let temporaryTemplate = localStorage.template;
+
+        if (temporaryTemplate) {
+            return JSON.parse(temporaryTemplate);
+        }
+
         return [{
             id: uuid(),
             type: '',
